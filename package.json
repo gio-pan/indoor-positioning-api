@@ -5,8 +5,10 @@
   "description": "Backend API for Indoor Positioning Project",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "start:dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js --ignore-pattern mongo-init.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,22 @@
   "license": "UNLICENSED",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongoose": "^5.4.17"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+      "indent": [
+        "error",
+        4
+      ]
+    }
   }
 }

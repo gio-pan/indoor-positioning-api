@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+    # Create container for Node JS Backend
+    indoor-positioning-api:
+        container_name: indoor-positioning-api
+        # Build image according to Dockerfile
+        build:
+            context: ../
+            dockerfile: docker/Dockerfile
+        # Map container's port 8080 to localhost:8080
+        ports:
+            - '8080:8080'
+        # Mount ../ directory on host (project folder) to container at /usr/src/app to reflect any changes made
+        volumes:
+            - '..:/usr/src/app'
+            - '/usr/src/app/node_modules'
+        depends_on:
+            - indoor-positioning-mongo
+
+    # Create container for MongoDB
+    indoor-positioning-mongo:
+        container_name: indoor-positioning-mongo
+        # Use mongo:4.0 image from docker repo for container
+        image: mongo:4.0
+        # Use volume for persistent data storage
+        # Mount mongo-init.js script to /docker-entrypoint-initdb.d to initialize DB on first build (ro = readonly)
+        # See 'Initializing a Fresh Instance' at https://hub.docker.com/_/mongo for more details
+        volumes:
+            - 'indoor-positioning-data-volume:/data/db'
+            - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+        # Map container's port 27017 to localhost:27017
+        ports:
+            - '27017:27017'
+        # Define variables for the mongo image
+        # See https://hub.docker.com/_/mongo for more details
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: example
+            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_DATABASE: indoor-positioning
+
+# Define volume for persistent data storage
+volumes:
+    indoor-positioning-data-volume:
+        name: indoor-positioning-data-volume

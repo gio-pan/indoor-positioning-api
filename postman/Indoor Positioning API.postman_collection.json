@@ -1,0 +1,152 @@
+{
+	"info": {
+		"name": "Indoor Positioning API",
+		"_postman_id": "48d16ea3-84ee-02bd-3fac-6502ac81264f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/v1/position/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"x\": 123,\n\t\"y\": 456\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/position/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"position",
+						"create"
+					]
+				},
+				"description": "Create position"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/position/all/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/api/v1/position/all/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"position",
+						"all",
+						""
+					]
+				},
+				"description": "Get all positions"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/position/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/api/v1/position/5c80dd88dd8ed4001c5681e8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"position",
+						"5c80dd88dd8ed4001c5681e8"
+					]
+				},
+				"description": "Get position by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/position/update/:id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"_id\": \"5c80dd88dd8ed4001c5681e8\",\n        \"x\": 123,\n        \"y\": 456,\n        \"date\": \"2019-03-07T08:59:52.125Z\",\n        \"__v\": 0\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/position/update/5c80dd88dd8ed4001c5681e8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"position",
+						"update",
+						"5c80dd88dd8ed4001c5681e8"
+					]
+				},
+				"description": "Update position by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/position/delete/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/position/delete/5c80dd88dd8ed4001c5681e8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"position",
+						"delete",
+						"5c80dd88dd8ed4001c5681e8"
+					]
+				},
+				"description": "Delete position by ID"
+			},
+			"response": []
+		}
+	]
+}
