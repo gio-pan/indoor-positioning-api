@@ -1,8 +1,6 @@
 # indoor-positioning-api
 Backend API for Indoor Positioning Project
 
-Download Docker
-
 ## Directory Structure
 
 ```
