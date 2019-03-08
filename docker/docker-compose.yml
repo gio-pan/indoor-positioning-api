@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 services:
     # Create container for Node JS Backend
     indoor-positioning-api:
@@ -41,3 +41,4 @@ services:
 # Define volume for persistent data storage
 volumes:
     indoor-positioning-data-volume:
+        name: indoor-positioning-data-volume
