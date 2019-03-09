@@ -5,14 +5,14 @@ services:
         container_name: indoor-positioning-api
         # Build image according to Dockerfile
         build:
-            context: ../
+            context: ./
             dockerfile: docker/Dockerfile
         # Map container's port 8080 to localhost:8080
         ports:
             - '8080:8080'
-        # Mount ../ directory on host (project folder) to container at /usr/src/app to reflect any changes made
+        # Mount ./ directory on host (project folder) to container at /usr/src/app to reflect any changes made
         volumes:
-            - '..:/usr/src/app'
+            - '.:/usr/src/app'
             - '/usr/src/app/node_modules'
         depends_on:
             - indoor-positioning-mongo
@@ -27,13 +27,10 @@ services:
         # See 'Initializing a Fresh Instance' at https://hub.docker.com/_/mongo for more details
         volumes:
             - 'indoor-positioning-data-volume:/data/db'
-            - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+            - './docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
         # Map container's port 27017 to localhost:27017
         ports:
             - '27017:27017'
-        # Use variables in the .env file
-        env_file:
-            - ../.env
         # Define variables for the mongo image
         # See https://hub.docker.com/_/mongo for more details
         environment:

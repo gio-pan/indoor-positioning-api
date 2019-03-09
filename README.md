@@ -47,7 +47,7 @@ indoor-positioning-api
 <!-- #### 3. Environment Variables -->
 #### Running
 
-Navigate into the `indoor-positioning-api/docker` folder
+Navigate into the `indoor-positioning-api` folder
 
 For the first run:
 ```
