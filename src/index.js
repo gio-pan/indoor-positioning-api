@@ -1,11 +1,12 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config');
 
-// TODO: environment variables
+// load environment variables
+require('dotenv').config();
+
 const port = process.env.PORT || 8080;
-const mongoURL = process.env.MONGO_URL || config.mongo_url;
+const mongoURL = process.env.MONGO_URL + process.env.MONGO_DB;
 
 const app = express();
 
@@ -13,8 +14,8 @@ const app = express();
 // TODO: proper connecting to database
 // TODO: not connecting on first docker-compose up
 const options = {
-    user: config.mongo_user,
-    pass: config.mongo_password,
+    user: process.env.MONGO_USER,
+    pass: process.env.MONGO_PASSWORD,
     reconnectTries: 60,
     reconnectInterval: 1000,
     connectTimeoutMS: 10000,
@@ -49,5 +50,3 @@ app.use((req, res) => {
 app.listen(port, () => {
     console.log(`Now listening on localhost:${port}`);
 });
-
-module.exports = app;

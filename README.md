@@ -23,11 +23,16 @@ indoor-positioning-api
     │   └── ...
     ├── routes          // endpoints for API defined here
     │   └── ...
-    ├── config.js
     └── index.js        // server entry point
 ```
 
 ## Development Setup
+
+### Before you begin
+
+1. Clone this repo
+
+2. Create a `.env` file (name it `.env` and it should not be committed to Git). A sample is given in `example.env`. Any user, password, and db can be used, but do not change the variable names.
 
 ### Using Docker
 
@@ -37,7 +42,7 @@ indoor-positioning-api
 
 2. Install __Docker Compose__ if not included in __Docker__ install (step 1)
 
-3. Clone this Repo
+3. Update the user, password, and db in `docker/mongo-init.js` to match those in the `.env` file.
 
 <!-- #### 3. Environment Variables -->
 #### Running
@@ -86,9 +91,11 @@ _Note: `Dockerfile` defines that the server is started inside the container usin
 
 2. Install __MongoDB__
 
-3. Clone this Repo
+3. Make sure the `MONGO_URL` environment variable is set to `mongodb://localhost:27017/`.
 
-4. Set up MongoDB - create database and user. The script in `docker/mongo-init.js` is copied here. You can specify your own user, pwd, and db.
+_Note: You must change the `indoor-positioning-mongo` to `localhost`._
+
+4. Set up MongoDB - create database and user. The script in `docker/mongo-init.js` is copied here. Make sure to have the user, password, and db match the variables in the `.env` file. Run the following commands in the Mongo Shell.
 
 ```
 > use indoor-positioning
@@ -98,24 +105,12 @@ _Note: `Dockerfile` defines that the server is started inside the container usin
     roles: [
         {
             role: "readWrite",
-            db: "<your-db>",
+            db: "<your-db",
         },
     ],
 });
 
 ```
-
-5. Change content of `src/config.js` to:
-
-```javascript
-mongo_url: 'mongodb://localhost:27017/<your-db>',
-mongo_user: '<your-user>',
-mongo_password: '<your-pwd>',
-```
-
-where the db, user, and pwd matches those in step 4. 
-
-_Note: You must change the `indoor-positioning-mongo` to `localhost`._
 
 <!-- #### 3. Environment Variables -->
 #### Running
