@@ -8,6 +8,10 @@ const positionCreate = (req, res) => {
         y: req.body.y,
     });
 
+    // get io object that was attached to app in index.js, app is attached to req
+    const io = req.app.get('io');
+    io.emit('tagLocationUpdate', 'messageeeeeee')
+
     // using mongoose
     position.save((err) => {
         if (err) {
