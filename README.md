@@ -32,7 +32,7 @@ indoor-positioning-api
 
 1. Clone this repo
 
-2. Create a `.env` file (name it `.env` and it should not be committed to Git). A sample is given in `example.env`. Any user, password, and db can be used, but do not change the variable names.
+2. Create a `.env` file (name it `.env` and it should not be committed to Git). A sample is given in `example.env`. Any user, password, and db can be used, but do not change the variable names. If Docker or Mongo has previously been set up, use the correct user, password, and db to enable the server to connect to Mongo.
 
 ### Using Docker
 
