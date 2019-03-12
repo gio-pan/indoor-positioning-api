@@ -7,7 +7,16 @@ router.all('/', (req, res) => {
     });
 });
 
-// /api/v1/position/... endpoints defined in routes/v1/position.js
-router.use('/position', require('./v1/positionRoutes'));
+// /api/v1/employee/... endpoints defined in routes/v1/employee.js
+router.use('/employee', require('./v1/employeeRoutes'));
+
+// /api/v1/equipment/... endpoints defined in routes/v1/equipment.js
+router.use('/equipment', require('./v1/equipmentRoutes'));
+
+// /api/v1/location/... endpoints defined in routes/v1/location.js
+// router.use('/location', require('./v1/locationRoutes'));
+
+// /api/v1/geofence/... endpoints defined in routes/v1/geofence.js
+router.use('/geofence', require('./v1/geofenceRoutes'));
 
 module.exports = router;

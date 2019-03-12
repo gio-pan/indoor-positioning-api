@@ -7,146 +7,497 @@
 	},
 	"item": [
 		{
-			"name": "/api/v1/position/create",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"x\": 123,\n\t\"y\": 456\n}"
+			"name": "Employee",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/employee/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"employeeId\": \"123456789\",\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"role\": \"worker\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/employee/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"add"
+							]
+						},
+						"description": "Create employee"
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/api/v1/position/create",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"position",
-						"create"
-					]
+				{
+					"name": "/api/v1/employee/get/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/employee/get/all/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"get",
+								"all",
+								""
+							]
+						},
+						"description": "Get all employees"
+					},
+					"response": []
 				},
-				"description": "Create position"
-			},
-			"response": []
+				{
+					"name": "/api/v1/employee/get/{employeeId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/employee/get/123456789/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"get",
+								"123456789",
+								""
+							]
+						},
+						"description": "Get employees by employeeId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/employee/update/{employeeId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Jane\",\n\t\"lastName\": \"Doe\",\n\t\"role\": \"worker\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/employee/update/123456789",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"update",
+								"123456789"
+							]
+						},
+						"description": "Update employee by employeeId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/employee/delete/{employeeId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/employee/delete/123456789",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"delete",
+								"123456789"
+							]
+						},
+						"description": "Delete employee by employeeId"
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "/api/v1/position/all/",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost:8080/api/v1/position/all/",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"position",
-						"all",
-						""
-					]
+			"name": "Equipment",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/equipment/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"equipId\": \"abcdefghj\",\n\t\"name\": \"Hard Hat\",\n\t\"mac\": \"12:34:56:AB:CD:EF\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"add"
+							]
+						},
+						"description": "Create equipment"
+					},
+					"response": []
 				},
-				"description": "Get all positions"
-			},
-			"response": []
+				{
+					"name": "/api/v1/equipment/get/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/get/all/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"get",
+								"all",
+								""
+							]
+						},
+						"description": "Get all equipments"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/equipment/get/{equipId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/get/abcdefghj/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"get",
+								"abcdefghj",
+								""
+							]
+						},
+						"description": "Get equipment by equipId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/equipment/update/{equipId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"equipId\": \"abcdefghj\",\n\t\"name\": \"Left Boot\",\n\t\"mac\": \"12:34:56:AB:CD:EF\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/update/abcdefghj",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"update",
+								"abcdefghj"
+							]
+						},
+						"description": "Update equipment by equipId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/equipment/pair/{equipId}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"employeeId\": \"123456788\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/pair/abcdefgh1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"pair",
+								"abcdefgh1"
+							]
+						},
+						"description": "Pair equipment by equipId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/equipment/delete/{equipId}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/delete/abcdefghj",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"delete",
+								"abcdefghj"
+							]
+						},
+						"description": "Delete equipment by equipId"
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "/api/v1/position/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost:8080/api/v1/position/5c80dd88dd8ed4001c5681e8",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"position",
-						"5c80dd88dd8ed4001c5681e8"
-					]
+			"name": "Geofence",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/geofence/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"vertices\": [\n\t\t{\n\t\t\t\"x\": 0,\n\t\t\t\"y\": 0\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.5,\n\t\t\t\"y\": 0\n\t\t},\n\t\t{\n\t\t\t\"x\": 0,\n\t\t\t\"y\": 0.8\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"add"
+							]
+						},
+						"description": "Create geofence polygon"
+					},
+					"response": []
 				},
-				"description": "Get position by ID"
-			},
-			"response": []
+				{
+					"name": "/api/v1/geofence/get/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/get/all/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"get",
+								"all",
+								""
+							]
+						},
+						"description": "Get all geofence polygons"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/geofence/get/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/get/5c87bb7dfd0ede004cc50f9e/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"get",
+								"5c87bb7dfd0ede004cc50f9e",
+								""
+							]
+						},
+						"description": "Get geofence by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/geofence/update/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"vertices\": [\n\t\t{\n\t\t\t\"x\": 0.2,\n\t\t\t\"y\": 0.2\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.5,\n\t\t\t\"y\": 0.2\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.2,\n\t\t\t\"y\": 0.8\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/update/5c87bb7dfd0ede004cc50f9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"update",
+								"5c87bb7dfd0ede004cc50f9e"
+							]
+						},
+						"description": "Update geofence by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/geofence/delete/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/delete/5c87bb7dfd0ede004cc50f9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"delete",
+								"5c87bb7dfd0ede004cc50f9e"
+							]
+						},
+						"description": "Delete geofence by id"
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "/api/v1/position/update/:id",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n        \"_id\": \"5c80dd88dd8ed4001c5681e8\",\n        \"x\": 123,\n        \"y\": 456,\n        \"date\": \"2019-03-07T08:59:52.125Z\",\n        \"__v\": 0\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/api/v1/position/update/5c80dd88dd8ed4001c5681e8",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"position",
-						"update",
-						"5c80dd88dd8ed4001c5681e8"
-					]
-				},
-				"description": "Update position by ID"
-			},
-			"response": []
-		},
-		{
-			"name": "/api/v1/position/delete/:id",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:8080/api/v1/position/delete/5c80dd88dd8ed4001c5681e8",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"position",
-						"delete",
-						"5c80dd88dd8ed4001c5681e8"
-					]
-				},
-				"description": "Delete position by ID"
-			},
-			"response": []
+			"name": "Location",
+			"description": "",
+			"item": []
 		}
 	]
 }

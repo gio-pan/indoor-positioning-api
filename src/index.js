@@ -2,15 +2,17 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const mongoose = require('mongoose');
 
 // load environment variables
 require('dotenv').config();
 
-const port = process.env.PORT || 8080;
-const mongoURL = process.env.MONGO_URL + process.env.MONGO_DB;
+// set up database connection
+// for development, must import db.js into index.js after 'require('dotenv').config()' call
+// so that process.env variables are defined
+require('./db');
 
 // initialize app, server, and socket io
+const port = process.env.PORT || 8080;
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
@@ -18,27 +20,13 @@ const io = socketIo(server);
 // set io property to attach io object to app then access from controllers
 app.set('io', io);
 
-// set up database connection
-// TODO: proper connecting to database (not connecting on first docker-compose up)
-const options = {
-    user: process.env.MONGO_USER,
-    pass: process.env.MONGO_PASSWORD,
-    reconnectTries: 60,
-    reconnectInterval: 1000,
-    connectTimeoutMS: 10000,
-};
-
-mongoose.connect(mongoURL, options);
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'db connection error: '));
-
 // BACKEND API
 // TODO: Logging
 // set response headers
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
+    // res.header("Access-Control-Allow-Origin", "*");
     next();
 });
 
