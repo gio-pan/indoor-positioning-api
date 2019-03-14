@@ -1,0 +1,701 @@
+swagger: '2.0'
+info:
+  description: |
+    This is the API for the Honeywell Spatial Analysis Senior Design project.
+  version: 1.0.0
+  title: Indoor Location API
+  contact:
+    email: jmoster6@gatech.edu
+host: localhost:8080
+basePath: /api/v1
+tags:
+  - name: employee
+    description: Operations about employees
+  - name: equipment
+    description: Operations about equipment
+  - name: location
+    description: Operations about location
+  - name: geofence
+    description: Operations about geofenced regions
+schemes:
+- http
+paths:
+  /employee/add:
+    post:
+      tags:
+        - employee
+      summary: Add an employee
+      description: Add a new employee to the system
+      operationId: addEmployee
+      parameters:
+        - name: body
+          in: body
+          description: Employee object that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /employee/get/all:
+    get:
+      tags:
+      - employee
+      summary: Retrieve all employees
+      description: Returns all employees from the system
+      operationId: getAllEmployees
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Employee'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /employee/get/{employeeId}:
+    get:
+      tags:
+        - employee
+      summary: Retrieve an employee
+      description: Returns a single employee from the system
+      operationId: getEmployeeById
+      parameters:
+        - name: employeeId
+          in: path
+          description: Id of employee to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Employee'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /employee/update/{employeeId}:
+    put:
+      tags:
+        - employee
+      summary: Update an employee
+      description: Update an existing employee in the system
+      operationId: updateEmployeeById
+      parameters:
+        - name: employeeId
+          in: path
+          description: Id of employee to update
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Employee object that updates the retrieved employee
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /employee/delete/{employeeId}:
+    delete:
+      tags:
+        - employee
+      summary: Delete an employee
+      description: Deletes a single employee from the system
+      operationId: deleteEmployeeById
+      parameters:
+        - name: employeeId
+          in: path
+          description: Id of employee to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/add:
+    post:
+      tags:
+        - equipment
+      summary: Add equipment
+      description: Add equipment information to the system
+      operationId: addEquipment
+      parameters:
+        - name: body
+          in: body
+          description: Equipment object that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Equipment'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/get/all:
+    get:
+      tags:
+      - equipment
+      summary: Retrieve all equipments
+      description: Returns all equipments from the system
+      operationId: getAllEquipments
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Equipment'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/get/{equipId}:
+    get:
+      tags:
+        - equipment
+      summary: Get equipment
+      description: Get equipment information from the system
+      operationId: getEquipmentById
+      parameters:
+        - name: equipId
+          in: path
+          description: Equipment id of equipment to get from system
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Equipment'
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/update/{equipId}:
+    put:
+      tags:
+        - equipment
+      summary: Update equipment
+      description: Update existing equipment in the system
+      operationId: updateEquipmentById
+      parameters:
+        - name: equipId
+          in: path
+          description: Id of equipment to update
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Equipment object that updates the retrieved equipment
+          required: true
+          schema:
+            $ref: '#/definitions/Equipment'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/pair/{equipId}:
+    put:
+      tags:
+      - equipment
+      summary: Pair equipment
+      description: Pair existing equipment in the system to existing employee
+      operationId: pairEquipmentById
+      parameters:
+      - name: equipId
+        in: path
+        description: Id of equipment to update
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: EmployeeId to pair
+        required: true
+        schema:
+          type: object
+          properties:
+            employeeId:
+              type: string
+              description: employeeId to pair equipment to
+              example: 123456789
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /equipment/delete/{equipId}:
+    delete:
+      tags:
+        - equipment
+      summary: Delete equipment
+      description: Deletes equipment from the system
+      operationId: deleteEquipmentById
+      parameters:
+        - name: equipId
+          in: path
+          description: Id of equipment to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /location/add:
+    post:
+      tags:
+      - location
+      summary: Add location of equipment (update)
+      description: For tags to call to update their location
+      operationId: addLocation
+      parameters:
+      - name: body
+        in: body
+        description: Location object that will be added to the system
+        required: true
+        schema:
+          $ref: '#/definitions/Location'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /location/getByEmployeeId/{employeeId}:
+    get:
+      tags:
+        - location
+      summary: Get location history
+      description: Get location history using employeeId of employee
+      operationId: getLocationByEmployeeId
+      parameters:
+        - name: employeeId
+          in: path
+          description: Id of employee to get location history
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Location'
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /location/getByEquipId/{equipId}:
+    get:
+      tags:
+        - location
+      summary: Get location history
+      description: Get location history using equipId of equipment
+      operationId: getLocationByEquipId
+      parameters:
+        - name: equipId
+          in: path
+          description: Id of equipment to get location history
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Location'
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/add:
+    post:
+      tags:
+        - geofence
+      summary: Add a geofence
+      description: Add a new geofence to the system
+      operationId: addGeofence
+      parameters:
+        - name: body
+          in: body
+          description: Geofence object that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Geofence'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/get/all:
+    get:
+      tags:
+        - geofence
+      summary: Retrieve all geofences
+      description: Returns all geofences from the system
+      operationId: getAllGeofences
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Geofence'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/get/{id}:
+    get:
+      tags:
+        - geofence
+      summary: Retrieve a geofence
+      description: Returns a single geofence from the system
+      operationId: getGeofenceById
+      parameters:
+        - name: id
+          in: path
+          description: Id of geofence to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Geofence'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/update/{id}:
+    put:
+      tags:
+        - geofence
+      summary: Update an geofence
+      description: Update an existing geofence in the system
+      operationId: updateGeofenceById
+      parameters:
+        - name: id
+          in: path
+          description: Id of geofence to update
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Geofence object that updates the retrieved geofence
+          required: true
+          schema:
+            $ref: '#/definitions/Geofence'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/delete/{id}:
+    delete:
+      tags:
+        - geofence
+      summary: Delete an geofence
+      description: Deletes a single geofence from the system
+      operationId: deleteGeofenceById
+      parameters:
+        - name: id
+          in: path
+          description: Id of geofence to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+definitions:
+  Employee:
+    type: object
+    required:
+      - employeeId
+      - firstName
+      - lastName
+      - role
+    properties:
+      employeeId:
+        type: string
+        description: Employee id
+        example: 123abc789
+      firstName:
+        type: string
+        description: First name
+        example: John
+      lastName:
+        type: string
+        description: Last name
+        example: Doe
+      role:
+        type: string
+        enum:
+          - admin
+          - manager
+          - worker
+        description: Employee role (affects security privileges)
+      # status:
+      #   type: string
+      #   enum:
+      #     - safe
+      #     - warning
+      #     - danger
+      #   description: Current safety condition
+      # equipIds:
+      #   type: array
+      #   items:
+      #     $ref: '#/definitions/Equipment'
+      #   description: Array of equipment belonging to an employee
+  Equipment:
+    type: object
+    required:
+      - equipId
+      - name
+      - mac
+    properties:
+      equipId:
+        type: string
+        description: Equipment reference id
+        example: 123abc789
+      name:
+        type: string
+        description: Name of equipment
+        enum:
+        - Hard Hat
+        - Left Boot
+        - Right Boot
+      mac:
+        type: string
+        pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        description: Equipment MAC address
+        example: 'E6:4F:09:AA:D1:0B'
+      assignedEmployeeId:
+        type: string
+        description: Id of employee equipment is assigned to
+        example: 123456789
+      isWorn:
+        type: boolean
+        description: Latest update whether the equipment is being worn according to sensors (updated by server from added location)
+        example: true
+      inSafeArea:
+        type: boolean
+        description: Latest update whether the equipment is in a safe area (calculated by server)
+        example: true
+      latestX:
+        type: number
+        format: float
+        description: Latest x coordinates (updated by server from added location)
+        example: -0.5555556
+      latestY:
+        type: number
+        format: float
+        description: Latest y coordinates (updated by server from added location)
+        example: -9
+  Location:
+    type: object
+    required:
+      - equipId
+      # - name
+      - mac
+      - timeRecorded
+      - wifiScan
+      - weightSensor
+    properties:
+      equipId:
+        type: string
+        description: Equipment reference id
+        example: 123abc789
+      # name:
+      #   type: string
+      #   description: Name of equipment
+      #   enum:
+      #   - Hard Hat
+      #   - Left Boot
+      #   - Right Boot
+      mac:
+        type: string
+        pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        description: Equipment MAC address
+        example: 'E6:4F:09:AA:D1:0B'
+      timeRecorded:
+        type: string
+        format: date-time
+        description: Time that the wifiScan was recorded
+      wifiScan:
+        type: array
+        items:
+          type: object
+          properties:
+            ssid:
+              type: string
+            bssid:
+              type: string
+            rssi:
+              type: integer
+              format: int64
+            channel:
+              type: integer
+              format: int64
+      weightSensor:
+        type: number
+        format: float
+      assignedEmployeeId:
+        type: string
+        description: Id of employee equipment is assigned to (can be retrieved by server)
+        example: 123456789
+      isWorn:
+        type: boolean
+        description: Whether the equipment is being worn according to sensors
+        example: true
+      inSafeArea:
+        type: boolean
+        description: Whether the equipment is in a safe area (calculated by server from coordinates)
+        example: true
+      x:
+        type: number
+        format: float
+        description: X coordinate (calculated by server from wifiScan)
+        example: 0.5555556
+      y:
+        type: number
+        format: float
+        description: Y coordinate (calculated by server from wifiScan)
+        example: 0.6
+  Geofence:
+    type: object
+    required:
+      - vertices
+    properties:
+      vertices:
+        type: array
+        items:
+          type: object
+          properties:
+            x:
+              type: number
+              format: float
+            y:
+              type: number
+              format: float
+        description: A list of x and y coordinates that make up a polyline (at least 3)
+        example:
+          - x: 0.2
+            y: 0.2
+          - x: 0.5
+            y: 0.2
+          - x: 0.2
+            y: 0.5
+      safetyLevel:
+        type: string
+        enum:
+          - safe
+          - warning
+          - danger
+        description: Safety level of the boundary
+responses:
+  Created:
+    description: Created
+    headers:
+      Location:
+        type: string
+        description: URL of created resource
+    schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Success Message
+  BadRequest:
+    description: Bad Request
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Validation Error or Invalid Body
+        error:
+          type: object
+          description: Actual error object
+  NotFound:
+    description: Not Found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Specified resource was not found
+  Conflict:
+    description: Conflict (Duplicate Key, Ids, etc.)
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Duplicate Key
+        error:
+          type: object
+          description: Actual error object
+  InternalServerError:
+    description: Internal Server Error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error Message
+        error:
+          type: object
+          description: Actual error object
