@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const http = require('http');
+const morgan = require('morgan');
 const socketIo = require('socket.io');
 
 // load environment variables
@@ -21,7 +22,9 @@ const io = socketIo(server);
 app.set('io', io);
 
 // BACKEND API
-// TODO: Logging
+// logging
+app.use(morgan('dev'));
+
 // set response headers
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');

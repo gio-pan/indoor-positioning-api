@@ -1,6 +1,10 @@
 # indoor-positioning-api
 Backend API for Indoor Positioning Project
 
+## Documentation
+
+API documentation is available on [Swagger](https://app.swaggerhub.com/apis/jlvmoster/IndoorLocationAPI/1.0.0)
+
 ## Directory Structure
 
 ```

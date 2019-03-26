@@ -36,6 +36,7 @@ const LocationSchema = new mongoose.Schema({
     },
     timeRecorded: { type: Date, required: true },
     wifiScan: { type: [WifiScanSchema], required: true },
+    weightSensor: { type: Number, required: true },
     assignedEmployeeId: { type: String },
     isWorn: { type: Boolean },
     inSafeArea: { type: Boolean },

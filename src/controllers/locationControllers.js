@@ -6,17 +6,18 @@ const errorResponse = require('../libs/errorHandler');
 const locationAdd = async (req, res) => {
     // check mac/equipId in system
     // get assignedEmployeeId
-    // update equipmentModel
     // calculate position
     // calculate safe area
+    // update equipmentModel
     const location = new Location({
         equipId: req.body.equipId,
         name: req.body.name,
         mac: req.body.mac,
         timeRecorded: req.body.timeRecorded,
         wifiScan: req.body.wifiScan,
+        weightSensor: req.body.weightSensor,
         assignedEmployeeId: assignedEmployeeId,
-        isWorn: req.body.isWorn,
+        isWorn: isWorn,
         inSafeArea: inSafeArea,
         x: x,
         y: y,
@@ -28,9 +29,9 @@ const locationAdd = async (req, res) => {
         // // get io object that was attached to app in index.js, app is attached to req
         // const io = req.app.get('io');
         // io.emit('tagLocationUpdate', 'messageeeeeee')
-        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${location.equipId}`)
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${newLocation.id}`)
         res.status(201).json({
-            message: `Added location with equipId = ${location.equipId}`,
+            message: `Added location with id = ${newLocation.id}`,
         });
     } catch (err) {
         errorResponse(err, res);
@@ -41,14 +42,14 @@ const locationAdd = async (req, res) => {
 const locationGetByEmployeeId = async (req, res) => {
     try {
         // aggregate?
-        const location = await Location.findOne({ employeeId: req.params.employeeId });
-        if (location === null) {
+        const locations = await Location.find({ assignedEmployeeId: req.params.employeeId });
+        if (!Array.isArray(locations) || locations.length < 1) {
             res.status(404).json({
-                message: `Could not find location with employeeId = ${req.params.employeeId}`,
+                message: `Could not find location with assignedEmployeeId = ${req.params.employeeId}`,
             });
             return;
         }
-        res.status(200).json(location);
+        res.status(200).json(locations);
     } catch (err) {
         errorResponse(err, res);
     }
@@ -58,14 +59,14 @@ const locationGetByEmployeeId = async (req, res) => {
 const locationGetByEquipId = async (req, res) => {
     try {
         // aggregate?
-        const location = await Location.findOne({ equipId: req.params.equipId });
-        if (location === null) {
+        const locations = await Location.find({ equipId: req.params.equipId });
+        if (!Array.isArray(locations) || locations.length < 1) {
             res.status(404).json({
                 message: `Could not find location with equipId = ${req.params.equipId}`,
             });
             return;
         }
-        res.status(200).json(location);
+        res.status(200).json(locations);
     } catch (err) {
         errorResponse(err, res);
     }

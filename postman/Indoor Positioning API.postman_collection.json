@@ -358,10 +358,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"vertices\": [\n\t\t{\n\t\t\t\"x\": 0,\n\t\t\t\"y\": 0\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.5,\n\t\t\t\"y\": 0\n\t\t},\n\t\t{\n\t\t\t\"x\": 0,\n\t\t\t\"y\": 0.8\n\t\t}\n\t]\n}"
+							"raw": "[\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.5,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.4,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.1\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t}\n]"
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/geofence/add",
+							"raw": "localhost:8080/api/v1/geofence/add/bulk",
 							"host": [
 								"localhost"
 							],
@@ -370,10 +370,43 @@
 								"api",
 								"v1",
 								"geofence",
-								"add"
+								"add",
+								"bulk"
 							]
 						},
 						"description": "Create geofence polygon"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/geofence/add/bulk",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.5,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.4,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.1\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t}\n]"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/add/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"add",
+								"bulk"
+							]
+						},
+						"description": "Create many geofence polygons at once"
 					},
 					"response": []
 				},
@@ -460,6 +493,39 @@
 					"response": []
 				},
 				{
+					"name": "/api/v1/geofence/delete/all",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/geofence/delete/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"geofence",
+								"delete",
+								"all"
+							]
+						},
+						"description": "Delete all geofences"
+					},
+					"response": []
+				},
+				{
 					"name": "/api/v1/geofence/delete/{id}",
 					"request": {
 						"method": "DELETE",
@@ -497,7 +563,486 @@
 		{
 			"name": "Location",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "/api/v1/location/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"equipId\": \"abcdefghi\",\n\t\"mac\": \"12:34:56:AB:CD:EF\",\n\t\"timeRecorded\": \"2019-03-12T06:42:08.150Z\",\n\t\"wifiScan\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"rssi\": -40,\n\t\t\t\"channel\": 11\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"rssi\": -60,\n\t\t\t\"channel\": 6\n\t\t}\n\t],\n\t\"weightSensor\": 0.4\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/location/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"location",
+								"add"
+							]
+						},
+						"description": "Update tag location (create location data point)"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/location/getByEmployeeId/{employeeId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/location/getByEmployeeId/123456789/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"location",
+								"getByEmployeeId",
+								"123456789",
+								""
+							]
+						},
+						"description": "Get location history by employeeId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/location/getByEquipId/{equipId}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/location/getByEquipId/abcdefghj/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"location",
+								"getByEquipId",
+								"abcdefghj",
+								""
+							]
+						},
+						"description": "Get location history by equipId"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Floorplan",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/floorplan/add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "floorplan",
+									"description": "",
+									"type": "file",
+									"src": "floorplan.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/floorplan/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"floorplan",
+								"add"
+							]
+						},
+						"description": "Add floorplan image"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/floorplan/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/floorplan/get",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"floorplan",
+								"get"
+							]
+						},
+						"description": "Get floorplan"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/floorplan/update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/floorplan/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"floorplan",
+								"update"
+							]
+						},
+						"description": "Update floorplan"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/floorplan/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/floorplan/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"floorplan",
+								"delete"
+							]
+						},
+						"description": "Delete floorplan"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Router",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/router/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ssid\": \"Test Network\",\n\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\"x\": \"0\",\n\t\"y\": \"0\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"add"
+							]
+						},
+						"description": "Create router"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/router/get/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/get/all/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"get",
+								"all",
+								""
+							]
+						},
+						"description": "Get all routers"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/router/get/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/get/5c87bb7dfd0ede004cc50f9e/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"get",
+								"5c87bb7dfd0ede004cc50f9e",
+								""
+							]
+						},
+						"description": "Get router by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/router/update/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ssid\": \"Test Network 2\",\n\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\"x\": \"1\",\n\t\"y\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/update/5c87bb7dfd0ede004cc50f9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"update",
+								"5c87bb7dfd0ede004cc50f9e"
+							]
+						},
+						"description": "Update router by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/router/delete/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/delete/5c87bb7dfd0ede004cc50f9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"delete",
+								"5c87bb7dfd0ede004cc50f9e"
+							]
+						},
+						"description": "Delete router by id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sensor",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/sensor/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"weightSensitivity\": 0.2\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/sensor/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sensor",
+								"add"
+							]
+						},
+						"description": "Add sensor configuration"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/sensor/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/sensor/get",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sensor",
+								"get"
+							]
+						},
+						"description": "Get sensor configuration"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/sensor/update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"weightSensitivity\": 0.2,\n\t\"temperatureSensitivity\": 30\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/sensor/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sensor",
+								"update"
+							]
+						},
+						"description": "Update sensor sensitivity configurations"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/sensor/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/sensor/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sensor",
+								"delete"
+							]
+						},
+						"description": "Delete sensor configuration"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -29,6 +29,33 @@ const geofenceAdd = async (req, res) => {
     }
 };
 
+// create documents for multiple geofences in db
+const geofenceAddBulk = async (req, res) => {
+    // if (!Array.isArray(req.body.vertices) || req.body.vertices.length < 3) {
+    //     res.status(400).json({
+    //         message: 'Invalid vertices in req.body. Vertices must be array of x,y coordinates of length 3 or more.'
+    //     })
+    //     return;
+    // }
+    // const geofence = new Geofence({
+    //     vertices: req.body.vertices,
+    //     safetyLevel: req.body.safetyLevel,
+    // });
+
+    // using mongoose
+    try {
+        const newGeofences = await Geofence.insertMany(req.body);
+        // update each equipmentModel
+        // push update to dashboard?
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/all`)
+        res.status(201).json({
+            message: `Added ${newGeofences.length} geofences`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // get all geofence documents
 const geofenceGetAll = async (req, res) => {
     try {
@@ -86,6 +113,20 @@ const geofenceUpdateById = async (req, res) => {
     }
 };
 
+// delete all geofence documents
+const geofenceDeleteAll = async (req, res) => {
+    try {
+        const result = await Geofence.deleteMany({});
+        // update each equipmentModel
+        // push update to dashboard?
+        res.status(200).json({
+            message: `Deleted ${result.deletedCount} geofences`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // delete geofence document by id
 const geofenceDeleteById = async (req, res) => {
     try {
@@ -107,10 +148,14 @@ const geofenceDeleteById = async (req, res) => {
     }
 };
 
+
+
 module.exports = {
     geofenceAdd,
+    geofenceAddBulk,
     geofenceGetAll,
     geofenceGetById,
     geofenceUpdateById,
+    geofenceDeleteAll,
     geofenceDeleteById,
 };

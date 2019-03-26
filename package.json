@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "start:dev": "nodemon src/index.js",
+    "start:dev": "npm i && nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js --ignore-pattern mongo-init.js"
   },
@@ -21,6 +21,8 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.17",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {

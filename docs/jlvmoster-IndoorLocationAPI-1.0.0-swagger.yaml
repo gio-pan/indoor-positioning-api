@@ -17,6 +17,12 @@ tags:
     description: Operations about location
   - name: geofence
     description: Operations about geofenced regions
+  - name: floorplan
+    description: Operations about stored floorplans
+  - name: router
+    description: Operations about router configurations
+  - name: sensor
+    description: Operations about sensor configurations
 schemes:
 - http
 paths:
@@ -373,6 +379,31 @@ paths:
           $ref: '#/responses/Conflict'
         500:
           $ref: '#/responses/InternalServerError'
+  /geofence/add/bulk:
+    post:
+      tags:
+        - geofence
+      summary: Add a geofence
+      description: Add multiple geofences to the system at once
+      operationId: addGeofenceBulk
+      parameters:
+        - name: body
+          in: body
+          description: Geofence object that will be added to the system
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Geofence'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
   /geofence/get/all:
     get:
       tags:
@@ -439,10 +470,44 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
+  /geofence/delete/all:
+    delete:
+      tags:
+        - geofence
+      summary: Delete all geofences
+      description: Deletes all geofences from the system
+      operationId: deleteAllGeofences
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
   /geofence/delete/{id}:
     delete:
       tags:
         - geofence
+      summary: Delete an geofence
+      description: Deletes a single geofence from the system
+      operationId: deleteGeofenceById
+      parameters:
+        - name: id
+          in: path
+          description: Id of geofence to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/add:
+    delete:
+      tags:
+        - floorplan
       summary: Delete an geofence
       description: Deletes a single geofence from the system
       operationId: deleteGeofenceById
@@ -645,6 +710,92 @@ definitions:
           - warning
           - danger
         description: Safety level of the boundary
+  Floorplan:
+    type: object
+    required:
+      - floorId
+    properties:
+      floorId:
+        type: string
+        description: Reference id of floor plan
+        example: 123abc789
+      name:
+        type: string
+        description: Floor name
+        example: Floor 6
+      mapType:
+        type: string
+        enum:
+          - PIC
+          - JSON
+        description: The returned map format of the floor plan
+      source:
+        type: string
+        format: byte
+        description: Base64 encoded map data of an image file or json string (depending on map type)
+      ppm:
+        type: number
+        format: float
+        description: Pixel per meter of image map
+        example: 1.69358
+      width:
+        type: integer
+        format: int64
+        description: Width in pixel of image map
+        example: 689
+      height:
+        type: integer
+        format: int64
+        description: Height in pixel of image map
+        example: 1400
+      corners:
+        type: object
+        properties:
+          nw:
+            type: object
+            properties:
+              x:
+                type: integer
+                format: int64
+                example: 103
+              y:
+                type: integer
+                format: int64
+                example: 272
+          ne:
+            type: object
+            properties:
+              x:
+                type: integer
+                format: int64
+                example: 568
+              y:
+                type: integer
+                format: int64
+                example: 411
+          sw:
+            type: object
+            properties:
+              x:
+                type: integer
+                format: int64
+                example: 600
+              y:
+                type: integer
+                format: int64
+                example: 1176
+          se:
+            type: object
+            properties:
+              x:
+                type: integer
+                format: int64
+                example: 157
+              y:
+                type: integer
+                format: int64
+                example: 1296
+        description: Object containing x, y coordinates of the four corners of the floor image
 responses:
   Created:
     description: Created
