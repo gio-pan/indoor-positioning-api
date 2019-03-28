@@ -358,10 +358,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.5,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.4,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.1\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t}\n]"
+							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.2,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.4,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.3,\n\t\t\t\t\t\"y\": 0.3\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"danger\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/geofence/add/bulk",
+							"raw": "localhost:8080/api/v1/geofence/add",
 							"host": [
 								"localhost"
 							],
@@ -370,54 +370,21 @@
 								"api",
 								"v1",
 								"geofence",
-								"add",
-								"bulk"
+								"add"
 							]
 						},
-						"description": "Create geofence polygon"
+						"description": "Create geofence"
 					},
 					"response": []
 				},
 				{
-					"name": "/api/v1/geofence/add/bulk",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.5,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.4,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.8\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t},\n\t{\n\t\t\"vertices\": [\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0.2,\n\t\t\t\t\"y\": 0\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"x\": 0,\n\t\t\t\t\"y\": 0.1\n\t\t\t}\n\t\t],\n\t\t\"safetyLevel\": \"safe\"\n\t}\n]"
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/geofence/add/bulk",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"geofence",
-								"add",
-								"bulk"
-							]
-						},
-						"description": "Create many geofence polygons at once"
-					},
-					"response": []
-				},
-				{
-					"name": "/api/v1/geofence/get/all",
+					"name": "/api/v1/geofence/get",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "localhost:8080/api/v1/geofence/get/all/",
+							"raw": "localhost:8080/api/v1/geofence/get",
 							"host": [
 								"localhost"
 							],
@@ -426,42 +393,15 @@
 								"api",
 								"v1",
 								"geofence",
-								"get",
-								"all",
-								""
+								"get"
 							]
 						},
-						"description": "Get all geofence polygons"
+						"description": "Get geofence"
 					},
 					"response": []
 				},
 				{
-					"name": "/api/v1/geofence/get/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "localhost:8080/api/v1/geofence/get/5c87bb7dfd0ede004cc50f9e/",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"geofence",
-								"get",
-								"5c87bb7dfd0ede004cc50f9e",
-								""
-							]
-						},
-						"description": "Get geofence by id"
-					},
-					"response": []
-				},
-				{
-					"name": "/api/v1/geofence/update/{id}",
+					"name": "/api/v1/geofence/update",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -472,10 +412,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"vertices\": [\n\t\t{\n\t\t\t\"x\": 0.2,\n\t\t\t\"y\": 0.2\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.5,\n\t\t\t\"y\": 0.2\n\t\t},\n\t\t{\n\t\t\t\"x\": 0.2,\n\t\t\t\"y\": 0.8\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.2,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.4,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.9\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.9\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"warning\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/geofence/update/5c87bb7dfd0ede004cc50f9e",
+							"raw": "localhost:8080/api/v1/geofence/update",
 							"host": [
 								"localhost"
 							],
@@ -484,16 +424,15 @@
 								"api",
 								"v1",
 								"geofence",
-								"update",
-								"5c87bb7dfd0ede004cc50f9e"
+								"update"
 							]
 						},
-						"description": "Update geofence by id"
+						"description": "Update geofence"
 					},
 					"response": []
 				},
 				{
-					"name": "/api/v1/geofence/delete/all",
+					"name": "/api/v1/geofence/delete",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -508,7 +447,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/geofence/delete/all",
+							"raw": "localhost:8080/api/v1/geofence/delete",
 							"host": [
 								"localhost"
 							],
@@ -517,44 +456,10 @@
 								"api",
 								"v1",
 								"geofence",
-								"delete",
-								"all"
+								"delete"
 							]
 						},
-						"description": "Delete all geofences"
-					},
-					"response": []
-				},
-				{
-					"name": "/api/v1/geofence/delete/{id}",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/geofence/delete/5c87bb7dfd0ede004cc50f9e",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"geofence",
-								"delete",
-								"5c87bb7dfd0ede004cc50f9e"
-							]
-						},
-						"description": "Delete geofence by id"
+						"description": "Delete geofence"
 					},
 					"response": []
 				}
@@ -713,10 +618,15 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "file",
-							"file": {
-								"src": ""
-							}
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "floorplan",
+									"description": "",
+									"type": "file",
+									"src": "floorplan.jpg"
+								}
+							]
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/floorplan/update",
