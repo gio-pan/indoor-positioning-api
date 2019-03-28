@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 // define schema for a Floorplan document
 const FloorplanSchema = new mongoose.Schema({
     data: { type: Buffer, required: true },
-    contentType: { type: String },
+    contentType: { type: String, required: true },
+    size: { type: Number, required: true },
 });
 
 FloorplanSchema.set('timestamps', true);

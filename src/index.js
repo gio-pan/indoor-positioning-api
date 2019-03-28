@@ -29,7 +29,7 @@ app.use(morgan('dev'));
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
-    // res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Origin', '*');
     next();
 });
 
@@ -47,7 +47,7 @@ app.use((req, res) => {
 // socket.io logging on connect and disconnect
 io.on('connection', (socket) => {
     console.log('A user connected to socket.io!');
-    socket.on('disconnect', (socket) => {
+    socket.on('disconnect', () => {
         console.log('A user disconnected from socket.io!');
     });
 });

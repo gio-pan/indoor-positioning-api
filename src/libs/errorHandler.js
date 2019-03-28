@@ -17,9 +17,11 @@ const errorResponse = (err, res) => {
 
     res.status(500).json({
         message: 'Could not perform operation due to an internal server error',
-        error: err,
+        error: {
+            name: err.name,
+            message: err.message,
+        },
     });
-    return;
-}
+};
 
 module.exports = errorResponse;

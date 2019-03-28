@@ -21,6 +21,4 @@ router.put('/update', sensorControllers.sensorUpdate);
 // DELETE /api/v1/sensor/delete/:sensorId endpoint
 router.delete('/delete', sensorControllers.sensorDelete);
 
-// assign equipment
-
 module.exports = router;

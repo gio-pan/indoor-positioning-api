@@ -4,19 +4,18 @@ const errorResponse = require('../libs/errorHandler');
 // create document for a employee in db
 // use schema defined in models/employeeModel.js
 const employeeAdd = async (req, res) => {
-    const employee = new Employee({
-        employeeId: req.body.employeeId,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        role: req.body.role,
-        // status: req.body.status,
-        // equipIds: req.body.equipIds,
-    });
-
     // using mongoose
     try {
-        const newEmployee = await employee.save();
-        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${employee.employeeId}`)
+        const employee = new Employee({
+            employeeId: req.body.employeeId,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            role: req.body.role,
+            // status: req.body.status,
+            // equipIds: req.body.equipIds,
+        });
+        await employee.save();
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${employee.employeeId}`);
         res.status(201).json({
             message: `Added employee with employeeId = ${employee.employeeId}`,
         });

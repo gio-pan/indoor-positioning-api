@@ -8,14 +8,15 @@ const RouterSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        validate: (v) => {
-            return new Promise((resolve, reject) => {
+        validate: [{
+            validator: v => new Promise((resolve) => {
                 setTimeout(() => {
                     const macRegex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
-                    resolve(macRegex.test(v))
+                    resolve(macRegex.test(v));
                 }, 10);
-            });
-        }
+            }),
+            msg: 'bssid must be of format XX:XX:XX:XX:XX:XX or XX-XX-XX-XX-XX-XX where X is a hexadecimal digit',
+        }],
     },
     x: { type: Number, required: true },
     y: { type: Number, required: true },

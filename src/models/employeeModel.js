@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const EquipmentSchema = require('../models/equipmentModel').schema;
+// const EquipmentSchema = require('../models/equipmentModel').schema;
 
 // define schema for an Employee document
 const EmployeeSchema = new mongoose.Schema({
@@ -11,6 +11,10 @@ const EmployeeSchema = new mongoose.Schema({
     // status: { type: String, enum: ['safe', 'warning', 'danger'], default: 'safe' },
     // equipIds: [EquipmentSchema],
 });
+
+// both of the following work to specify error messages for required fields
+// required: 'some error message'
+// required: [true, 'some error message']
 
 EmployeeSchema.set('timestamps', true);
 

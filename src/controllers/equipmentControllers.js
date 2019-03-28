@@ -5,19 +5,18 @@ const errorResponse = require('../libs/errorHandler');
 // create document for a equipment in db
 // use schema defined in models/equipmentModel.js
 const equipmentAdd = async (req, res) => {
-    const equipment = new Equipment({
-        equipId: req.body.equipId,
-        name: req.body.name,
-        mac: req.body.mac,
-        assignedEmployeeId: req.body.assignedEmployeeId,
-        x: req.body.x,
-        y: req.body.y,
-    });
-
     // using mongoose
     try {
-        const newEquipment = await equipment.save();
-        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${equipment.equipId}`)
+        const equipment = new Equipment({
+            equipId: req.body.equipId,
+            name: req.body.name,
+            mac: req.body.mac,
+            assignedEmployeeId: req.body.assignedEmployeeId,
+            x: req.body.x,
+            y: req.body.y,
+        });
+        await equipment.save();
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${equipment.equipId}`);
         res.status(201).json({
             message: `Added equipment with equipId = ${equipment.equipId}`,
         });
@@ -56,7 +55,8 @@ const equipmentGetByEquipId = async (req, res) => {
 const equipmentUpdateByEquipId = async (req, res) => {
     try {
         if (req.body.assignedEmployeeId !== undefined) {
-            // if assignedEmployeeId is in update, check if assignedEmployeeId is valid (exists in employees collection)
+            // if assignedEmployeeId is in update, check if
+            // assignedEmployeeId is valid (exists in employees collection)
             const employee = await Employee.findOne({ employeeId: req.body.assignedEmployeeId });
             if (employee === null) {
                 res.status(404).json({
@@ -105,7 +105,7 @@ const equipmentPairByEquipId = async (req, res) => {
         }
         const equipment = await Equipment.findOneAndUpdate(
             { equipId: req.params.equipId },
-            { $set: { assignedEmployeeId: req.body.employeeId } , $inc: { __v: 1 } },
+            { $set: { assignedEmployeeId: req.body.employeeId }, $inc: { __v: 1 } },
             { new: true, runValidators: true }, // new: return updated document instead of original
         );
         if (equipment === null) {

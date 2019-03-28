@@ -360,8 +360,8 @@ paths:
     post:
       tags:
         - geofence
-      summary: Add a geofence
-      description: Add a new geofence to the system
+      summary: Add geofence (can have multiple boundaries)
+      description: Add a new geofence to the system (TODO - and update equipment statuses)
       operationId: addGeofence
       parameters:
         - name: body
@@ -379,60 +379,13 @@ paths:
           $ref: '#/responses/Conflict'
         500:
           $ref: '#/responses/InternalServerError'
-  /geofence/add/bulk:
-    post:
-      tags:
-        - geofence
-      summary: Add a geofence
-      description: Add multiple geofences to the system at once
-      operationId: addGeofenceBulk
-      parameters:
-        - name: body
-          in: body
-          description: Geofence object that will be added to the system
-          required: true
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Geofence'
-      responses:
-        201:
-          $ref: '#/responses/Created'
-        400:
-          $ref: '#/responses/BadRequest'
-        409:
-          $ref: '#/responses/Conflict'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /geofence/get/all:
+  /geofence/get:
     get:
       tags:
         - geofence
-      summary: Retrieve all geofences
-      description: Returns all geofences from the system
-      operationId: getAllGeofences
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Geofence'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /geofence/get/{id}:
-    get:
-      tags:
-        - geofence
-      summary: Retrieve a geofence
-      description: Returns a single geofence from the system
-      operationId: getGeofenceById
-      parameters:
-        - name: id
-          in: path
-          description: Id of geofence to get
-          required: true
-          type: string
+      summary: Retrieve geofence
+      description: Returns geofence from the system
+      operationId: getGeofence
       responses:
         200:
           description: OK
@@ -442,19 +395,14 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
-  /geofence/update/{id}:
+  /geofence/update:
     put:
       tags:
         - geofence
-      summary: Update an geofence
-      description: Update an existing geofence in the system
-      operationId: updateGeofenceById
+      summary: Update geofence
+      description: Update geofence in the system (TODO - and update equipment statuses)
+      operationId: updateGeofence
       parameters:
-        - name: id
-          in: path
-          description: Id of geofence to update
-          required: true
-          type: string
         - name: body
           in: body
           description: Geofence object that updates the retrieved geofence
@@ -470,33 +418,13 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
-  /geofence/delete/all:
+  /geofence/delete:
     delete:
       tags:
         - geofence
-      summary: Delete all geofences
-      description: Deletes all geofences from the system
-      operationId: deleteAllGeofences
-      responses:
-        200:
-          description: OK
-        404:
-          $ref: '#/responses/NotFound'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /geofence/delete/{id}:
-    delete:
-      tags:
-        - geofence
-      summary: Delete an geofence
-      description: Deletes a single geofence from the system
-      operationId: deleteGeofenceById
-      parameters:
-        - name: id
-          in: path
-          description: Id of geofence to delete
-          required: true
-          type: string
+      summary: Delete geofence
+      description: Deletes geofence from the system (TODO - and update equipment statuses)
+      operationId: deleteGeofence
       responses:
         200:
           description: OK
@@ -505,18 +433,80 @@ paths:
         500:
           $ref: '#/responses/InternalServerError'
   /floorplan/add:
+    post:
+      tags:
+        - floorplan
+      summary: Add a floorplan image (png or jpeg) under 5MB
+      description: Add a floorplan image to the system. Must be .png or .jpg/.jpeg and smaller than 5MB
+      operationId: addFloorplan
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: floorplan
+          type: file
+          description: The image to upload.
+          required: true
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        415:
+          $ref: '#/responses/UnsupportedMediaType'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/get:
+    get:
+      tags:
+        - floorplan
+      summary: Retrieve floorplan
+      description: Returns floorplan from the system
+      operationId: getFloorplan
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Floorplan'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/update:
+    put:
+      tags:
+        - floorplan
+      summary: Update floorplan image (png or jpeg) under 5MB
+      description: Update floorplan in the system. Must be .png or .jpg/.jpeg and smaller than 5MB
+      operationId: updateFloorplan
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: floorplan
+          type: file
+          description: The image to upload.
+          required: true
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        415:
+          $ref: '#/responses/UnsupportedMediaType'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/delete:
     delete:
       tags:
         - floorplan
-      summary: Delete an geofence
-      description: Deletes a single geofence from the system
-      operationId: deleteGeofenceById
-      parameters:
-        - name: id
-          in: path
-          description: Id of geofence to delete
-          required: true
-          type: string
+      summary: Delete floorplan
+      description: Deletes floorplan from the system
+      operationId: deleteFloorplan
       responses:
         200:
           description: OK
@@ -682,120 +672,142 @@ definitions:
   Geofence:
     type: object
     required:
-      - vertices
+      - boundaries
     properties:
-      vertices:
+      boundaries:
         type: array
         items:
           type: object
+          required:
+            - vertices
           properties:
-            x:
-              type: number
-              format: float
-            y:
-              type: number
-              format: float
-        description: A list of x and y coordinates that make up a polyline (at least 3)
-        example:
-          - x: 0.2
-            y: 0.2
-          - x: 0.5
-            y: 0.2
-          - x: 0.2
-            y: 0.5
-      safetyLevel:
-        type: string
-        enum:
-          - safe
-          - warning
-          - danger
-        description: Safety level of the boundary
+            vertices:
+              type: array
+              items:
+                type: object
+                required:
+                  - x
+                  - y
+                properties:
+                  x:
+                    type: number
+                    format: float
+                  y:
+                    type: number
+                    format: float
+              description: A list of x and y coordinates that make up a polyline (at least 3)
+              example:
+                - x: 0.2
+                  y: 0.2
+                - x: 0.5
+                  y: 0.2
+                - x: 0.2
+                  y: 0.5
+            safetyLevel:
+              type: string
+              enum:
+                - safe
+                - warning
+                - danger
+              description: Safety level of the boundary
   Floorplan:
     type: object
-    required:
-      - floorId
     properties:
-      floorId:
+      contentType:
         type: string
-        description: Reference id of floor plan
-        example: 123abc789
-      name:
-        type: string
-        description: Floor name
-        example: Floor 6
-      mapType:
-        type: string
-        enum:
-          - PIC
-          - JSON
-        description: The returned map format of the floor plan
-      source:
-        type: string
-        format: byte
-        description: Base64 encoded map data of an image file or json string (depending on map type)
-      ppm:
+        description: mimetype of file
+        example: image/png
+      size:
         type: number
-        format: float
-        description: Pixel per meter of image map
-        example: 1.69358
-      width:
-        type: integer
-        format: int64
-        description: Width in pixel of image map
-        example: 689
-      height:
-        type: integer
-        format: int64
-        description: Height in pixel of image map
-        example: 1400
-      corners:
-        type: object
-        properties:
-          nw:
-            type: object
-            properties:
-              x:
-                type: integer
-                format: int64
-                example: 103
-              y:
-                type: integer
-                format: int64
-                example: 272
-          ne:
-            type: object
-            properties:
-              x:
-                type: integer
-                format: int64
-                example: 568
-              y:
-                type: integer
-                format: int64
-                example: 411
-          sw:
-            type: object
-            properties:
-              x:
-                type: integer
-                format: int64
-                example: 600
-              y:
-                type: integer
-                format: int64
-                example: 1176
-          se:
-            type: object
-            properties:
-              x:
-                type: integer
-                format: int64
-                example: 157
-              y:
-                type: integer
-                format: int64
-                example: 1296
-        description: Object containing x, y coordinates of the four corners of the floor image
+        description: size of the file in bytes
+        example: 90132
+      imgData:
+        type: string
+        description: data of the image file to be placed in <img src={*here*}/>
+    # required:
+    #   - floorId
+    # properties:
+    #   floorId:
+    #     type: string
+    #     description: Reference id of floor plan
+    #     example: 123abc789
+    #   name:
+    #     type: string
+    #     description: Floor name
+    #     example: Floor 6
+    #   mapType:
+    #     type: string
+    #     enum:
+    #       - PIC
+    #       - JSON
+    #     description: The returned map format of the floor plan
+    #   source:
+    #     type: string
+    #     format: byte
+    #     description: Base64 encoded map data of an image file or json string (depending on map type)
+    #   ppm:
+    #     type: number
+    #     format: float
+    #     description: Pixel per meter of image map
+    #     example: 1.69358
+    #   width:
+    #     type: integer
+    #     format: int64
+    #     description: Width in pixel of image map
+    #     example: 689
+    #   height:
+    #     type: integer
+    #     format: int64
+    #     description: Height in pixel of image map
+    #     example: 1400
+    #   corners:
+    #     type: object
+    #     properties:
+    #       nw:
+    #         type: object
+    #         properties:
+    #           x:
+    #             type: integer
+    #             format: int64
+    #             example: 103
+    #           y:
+    #             type: integer
+    #             format: int64
+    #             example: 272
+    #       ne:
+    #         type: object
+    #         properties:
+    #           x:
+    #             type: integer
+    #             format: int64
+    #             example: 568
+    #           y:
+    #             type: integer
+    #             format: int64
+    #             example: 411
+    #       sw:
+    #         type: object
+    #         properties:
+    #           x:
+    #             type: integer
+    #             format: int64
+    #             example: 600
+    #           y:
+    #             type: integer
+    #             format: int64
+    #             example: 1176
+    #       se:
+    #         type: object
+    #         properties:
+    #           x:
+    #             type: integer
+    #             format: int64
+    #             example: 157
+    #           y:
+    #             type: integer
+    #             format: int64
+    #             example: 1296
+    #     description: Object containing x, y coordinates of the four corners of the floor image
 responses:
   Created:
     description: Created
@@ -820,6 +832,17 @@ responses:
         error:
           type: object
           description: Actual error object
+  UnsupportedMediaType:
+    description: Unsupported Media Type
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Unsupported Media Type
+        error:
+          type: object
+          description: Accepted file types are...
   NotFound:
     description: Not Found
     schema:

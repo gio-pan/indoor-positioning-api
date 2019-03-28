@@ -4,17 +4,16 @@ const errorResponse = require('../libs/errorHandler');
 // create document for a router in db
 // use schema defined in models/routerModel.js
 const routerAdd = async (req, res) => {
-    const router = new Router({
-        ssid: req.body.ssid,
-        bssid: req.body.bssid,
-        x: req.body.x,
-        y: req.body.y,
-    });
-
     // using mongoose
     try {
+        const router = new Router({
+            ssid: req.body.ssid,
+            bssid: req.body.bssid,
+            x: req.body.x,
+            y: req.body.y,
+        });
         const newRouter = await router.save();
-        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${newRouter.id}`)
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${newRouter.id}`);
         res.status(201).json({
             message: `Added router with id = ${newRouter.id}`,
         });
