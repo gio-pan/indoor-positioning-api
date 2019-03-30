@@ -37,6 +37,12 @@
       "indent": [
         "error",
         4
+      ],
+      "no-plusplus": [
+        "error",
+        {
+            "allowForLoopAfterthoughts": true
+        }
       ]
     }
   }

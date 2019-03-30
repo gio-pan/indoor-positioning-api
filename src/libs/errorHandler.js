@@ -1,3 +1,5 @@
+// common http responses for different errors
+
 const errorResponse = (err, res) => {
     if (err.name === 'ValidationError') {
         res.status(400).json({
