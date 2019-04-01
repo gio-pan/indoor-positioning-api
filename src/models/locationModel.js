@@ -22,7 +22,7 @@ const WifiScanSchema = new mongoose.Schema({
 // define schema for a Location document
 const LocationSchema = new mongoose.Schema({
     equipId: { type: String, required: true }, // minlength, maxlength
-    // name: { type: String, required: true, enum: ['Hard Hat', 'Left Boot', 'Right Boot'] },
+    name: { type: String, required: true, enum: ['Hard Hat', 'Left Boot', 'Right Boot'] },
     mac: {
         type: String,
         required: true,
@@ -39,9 +39,10 @@ const LocationSchema = new mongoose.Schema({
     timeRecorded: { type: Date, required: true },
     wifiScan: { type: [WifiScanSchema], required: true },
     weightSensor: { type: Number, required: true },
+    temperatureSensor: { type: Number, required: true },
     assignedEmployeeId: { type: String },
     isWorn: { type: Boolean },
-    inSafeArea: { type: Boolean },
+    safetyStatus: { type: String, enum: ['safe', 'warning', 'danger'] },
     x: { type: Number },
     y: { type: Number },
 });

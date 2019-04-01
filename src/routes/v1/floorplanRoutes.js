@@ -5,7 +5,7 @@ const floorplanControllers = require('../../controllers/floorplanControllers');
 // save to memory as a buffer before sending to mongo
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { filesize: 5 * 1000 * 1000 }, // limit file to 5MBr
+    limits: { filesize: 5 * 1000 * 1000 }, // limit file to 5MB
     fileFilter: (req, file, cb) => {
         if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
             cb(null, true);

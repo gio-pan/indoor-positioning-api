@@ -41,7 +41,20 @@
       "no-plusplus": [
         "error",
         {
-            "allowForLoopAfterthoughts": true
+          "allowForLoopAfterthoughts": true
+        }
+      ],
+      "object-shorthand": [
+        "error",
+        "consistent"
+      ],
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_id",
+            "__v"
+          ]
         }
       ]
     }

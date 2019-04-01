@@ -1,6 +1,7 @@
 const Floorplan = require('../models/floorplanModel');
 const Geofence = require('../models/geofenceModel');
 const errorResponse = require('../libs/errorHandler');
+const updateEquipments = require('../libs/updateEquipments');
 
 const multerError = (req, res) => {
     if (req.fileTypeError) {
@@ -44,10 +45,10 @@ const floorplanAdd = async (req, res) => {
             });
             return;
         }
-        const newFloorplan = await floorplan.save();
+        await floorplan.save();
         res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get`);
         res.status(201).json({
-            message: `Added floorplan with id = ${newFloorplan.id}`,
+            message: 'Added floorplan',
         });
     } catch (err) {
         errorResponse(err, res);
@@ -77,7 +78,6 @@ const floorplanGet = async (req, res) => {
             imgData: base64Flag + base64Image,
         };
 
-        // process buffer data
         res.status(200).json(convertedResponse);
     } catch (err) {
         errorResponse(err, res);
@@ -89,10 +89,6 @@ const floorplanUpdate = async (req, res) => {
     if (multerError(req, res)) {
         return;
     }
-
-    // delete geofences?
-    // update each equipmentModel
-    // push update to dashboard?
     try {
         const newFloorplan = {
             data: req.file.buffer,
@@ -100,7 +96,6 @@ const floorplanUpdate = async (req, res) => {
             size: req.file.size,
         };
 
-        await Geofence.findOneAndDelete({});
         const floorplan = await Floorplan.findOneAndUpdate(
             {},
             { $set: newFloorplan, $inc: { __v: 1 } },
@@ -112,6 +107,15 @@ const floorplanUpdate = async (req, res) => {
             });
             return;
         }
+
+        // delete geofence
+        await Geofence.findOneAndDelete({});
+        // get io object that was attached to app in index.js, app is attached to req
+        const io = req.app.get('io');
+        // update each equipmentModel
+        // push update to dashboard
+        await updateEquipments.updateAllStatus([], io);
+
         res.status(200).json({
             message: 'Updated floorplan',
             updatedObject: floorplan,
@@ -123,18 +127,23 @@ const floorplanUpdate = async (req, res) => {
 
 // delete floorplan document
 const floorplanDelete = async (req, res) => {
-    // delete geofences
-    // update each equipmentModel
-    // push update to dashboard?
     try {
-        await Geofence.findOneAndDelete({});
         const floorplan = await Floorplan.findOneAndDelete({});
         if (floorplan === null) {
             res.status(404).json({
-                message: 'Could not find floorplan',
+                message: 'No floorplan in database',
             });
             return;
         }
+
+        // delete geofence
+        await Geofence.findOneAndDelete({});
+        // get io object that was attached to app in index.js, app is attached to req
+        const io = req.app.get('io');
+        // update each equipmentModel
+        // push update to dashboard
+        await updateEquipments.updateAllStatus([], io);
+
         res.status(200).json({
             message: 'Deleted floorplan',
         });

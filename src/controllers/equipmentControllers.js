@@ -12,8 +12,6 @@ const equipmentAdd = async (req, res) => {
             name: req.body.name,
             mac: req.body.mac,
             assignedEmployeeId: req.body.assignedEmployeeId,
-            x: req.body.x,
-            y: req.body.y,
         });
         await equipment.save();
         res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${equipment.equipId}`);
@@ -123,6 +121,29 @@ const equipmentPairByEquipId = async (req, res) => {
     }
 };
 
+// unpair equipment to employeeId by equipId
+const equipmentUnpairByEquipId = async (req, res) => {
+    try {
+        const equipment = await Equipment.findOneAndUpdate(
+            { equipId: req.params.equipId },
+            { $unset: { assignedEmployeeId: '' }, $inc: { __v: 1 } },
+            { new: true }, // new: return updated document instead of original
+        );
+        if (equipment === null) {
+            res.status(404).json({
+                message: `Could not find equipment with equipId = ${req.params.equipId}`,
+            });
+            return;
+        }
+        res.status(200).json({
+            message: `Unpaired equipment with equipId = ${req.params.equipId}`,
+            updatedObject: equipment,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // delete equipment document by equipId
 const equipmentDeleteByEquipId = async (req, res) => {
     try {
@@ -149,5 +170,6 @@ module.exports = {
     equipmentGetByEquipId,
     equipmentUpdateByEquipId,
     equipmentPairByEquipId,
+    equipmentUnpairByEquipId,
     equipmentDeleteByEquipId,
 };

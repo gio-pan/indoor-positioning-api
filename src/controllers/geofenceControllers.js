@@ -1,5 +1,6 @@
 const Geofence = require('../models/geofenceModel');
 const errorResponse = require('../libs/errorHandler');
+const updateEquipments = require('../libs/updateEquipments');
 
 // create document for a geofence in db
 // use schema defined in models/geofenceModel.js
@@ -17,11 +18,14 @@ const geofenceAdd = async (req, res) => {
             return;
         }
         const newGeofence = await geofence.save();
+        // get io object that was attached to app in index.js, app is attached to req
+        const io = req.app.get('io');
         // update each equipmentModel
-        // push update to dashboard?
+        // push update to dashboard
+        await updateEquipments.updateAllStatus(newGeofence.boundaries, io);
         res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get`);
         res.status(201).json({
-            message: `Added geofence with id = ${newGeofence.id}`,
+            message: 'Added geofence',
         });
     } catch (err) {
         errorResponse(err, res);
@@ -52,14 +56,17 @@ const geofenceUpdate = async (req, res) => {
             { $set: req.body, $inc: { __v: 1 } },
             { new: true, runValidators: true }, // new: return updated document instead of original
         );
-        // update each equipmentModel
-        // push update to dashboard?
         if (geofence === null) {
             res.status(404).json({
                 message: 'No geofence in database',
             });
             return;
         }
+        // get io object that was attached to app in index.js, app is attached to req
+        const io = req.app.get('io');
+        // update each equipmentModel
+        // push update to dashboard
+        await updateEquipments.updateAllStatus(geofence.boundaries, io);
         res.status(200).json({
             message: `Updated geofence with id = ${geofence.id}`,
             updatedObject: geofence,
@@ -75,12 +82,15 @@ const geofenceDelete = async (req, res) => {
         const geofence = await Geofence.findOneAndDelete({});
         if (geofence === null) {
             res.status(404).json({
-                message: 'Could not find geofence',
+                message: 'No geofence in database',
             });
             return;
         }
+        // get io object that was attached to app in index.js, app is attached to req
+        const io = req.app.get('io');
         // update each equipmentModel
-        // push update to dashboard?
+        // push update to dashboard
+        await updateEquipments.updateAllStatus([], io);
         res.status(200).json({
             message: 'Deleted geofence',
         });

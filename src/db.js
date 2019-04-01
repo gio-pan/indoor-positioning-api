@@ -18,9 +18,10 @@ const options = {
 // function to connect with retries every 5 seconds if failed
 const connectDbWithRetry = async () => {
     try {
-        const connection = await mongoose.connect(mongoUrl, options);
+        // const connection = await mongoose.connect(mongoUrl, options);
+        await mongoose.connect(mongoUrl, options);
         console.log('Successfully connected to Mongo');
-        return connection;
+        // return connection;
     } catch (err) {
         console.error('Error connecting to Mongo on startup - trying again in 5 seconds', err);
         setTimeout(connectDbWithRetry, 5000);

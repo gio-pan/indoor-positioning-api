@@ -1,4 +1,5 @@
 const Employee = require('../models/employeeModel');
+const Equipment = require('../models/equipmentModel');
 const errorResponse = require('../libs/errorHandler');
 
 // create document for a employee in db
@@ -78,13 +79,18 @@ const employeeDeleteByEmployeeId = async (req, res) => {
     try {
         const employee = await Employee.findOneAndDelete({ employeeId: req.params.employeeId });
         // delete location history?
-        // unpair equipment
         if (employee === null) {
             res.status(404).json({
                 message: `Could not find employee with employeeId = ${req.params.employeeId}`,
             });
             return;
         }
+        // unpair equipment
+        await Equipment.updateMany(
+            { assignedEmployeeId: req.params.employeeId },
+            { $unset: { assignedEmployeeId: '' }, $inc: { __v: 1 } },
+            { new: true }, // new: return updated document instead of original
+        );
         res.status(200).json({
             message: `Deleted employee with employeeId = ${req.params.employeeId}`,
             deletedObject: employee,

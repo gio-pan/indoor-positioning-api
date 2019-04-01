@@ -25,7 +25,7 @@ router.put('/update/:equipId', equipmentControllers.equipmentUpdateByEquipId);
 router.put('/pair/:equipId', equipmentControllers.equipmentPairByEquipId);
 
 // PUT /api/v1/equipment/pair/:equipId endpoint
-// router.put('/unpair/:equipId', equipmentControllers.equipmentPairByEquipId);
+router.put('/unpair/:equipId', equipmentControllers.equipmentUnpairByEquipId); // swagger
 
 // DELETE /api/v1/equipment/delete/:equipId endpoint
 router.delete('/delete/:equipId', equipmentControllers.equipmentDeleteByEquipId);

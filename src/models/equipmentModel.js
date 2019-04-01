@@ -20,7 +20,7 @@ const EquipmentSchema = new mongoose.Schema({
     },
     assignedEmployeeId: { type: String },
     isWorn: { type: Boolean },
-    inSafeArea: { type: Boolean },
+    safetyStatus: { type: String, enum: ['safe', 'warning', 'danger'] },
     latestX: { type: Number },
     latestY: { type: Number },
 });

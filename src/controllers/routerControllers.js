@@ -22,6 +22,20 @@ const routerAdd = async (req, res) => {
     }
 };
 
+// create documents for multiple routers in db
+const routerAddBulk = async (req, res) => {
+    // using mongoose
+    try {
+        const newRouters = await Router.insertMany(req.body.routers);
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/all`);
+        res.status(201).json({
+            message: `Added ${newRouters.length} routers`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // get all router documents
 const routerGetAll = async (req, res) => {
     try {
@@ -48,6 +62,32 @@ const routerGetById = async (req, res) => {
     }
 };
 
+// // update multiple router documents by id
+// // CANNOT RUN VALIDATORS
+// const routerUpdateBulk = async (req, res) => {
+//     try {
+//         const operations = req.body.routers.map((router) => {
+//             const operation = {
+//                 updateOne: {
+//                     filter: { _id: router._id },
+//                     update: { $set: router, $inc: { __v: 1 } },
+//                 },
+//             };
+//             return operation;
+//         });
+//         const result = await Router.bulkWrite(
+//             operations,
+//             { ordered: false },
+//         );
+//         res.status(200).json({
+//             message: `Updated ${result.modifiedCount} routers`,
+//             operations: operations,
+//         });
+//     } catch (err) {
+//         errorResponse(err, res);
+//     }
+// };
+
 // update router document by id
 const routerUpdateById = async (req, res) => {
     try {
@@ -71,12 +111,34 @@ const routerUpdateById = async (req, res) => {
     }
 };
 
+// delete all router documents
+const routerDeleteAll = async (req, res) => {
+    try {
+        const result = await Router.deleteMany({});
+        res.status(200).json({
+            message: `Deleted ${result.deletedCount} routers`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
+// delete multiple router documents by id
+const routerDeleteBulk = async (req, res) => {
+    try {
+        const result = await Router.deleteMany({ _id: { $in: req.body.ids } });
+        res.status(200).json({
+            message: `Deleted ${result.deletedCount} routers`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // delete router document by id
 const routerDeleteById = async (req, res) => {
     try {
         const router = await Router.findByIdAndDelete(req.params.id);
-        // delete location history?
-        // unpair equipment
         if (router === null) {
             res.status(404).json({
                 message: `Could not find router with id = ${req.params.id}`,
@@ -94,8 +156,11 @@ const routerDeleteById = async (req, res) => {
 
 module.exports = {
     routerAdd,
+    routerAddBulk,
     routerGetAll,
     routerGetById,
     routerUpdateById,
+    routerDeleteAll,
+    routerDeleteBulk,
     routerDeleteById,
 };
