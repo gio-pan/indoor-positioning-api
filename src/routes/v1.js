@@ -28,4 +28,7 @@ router.use('/router', require('./v1/routerRoutes'));
 // /api/v1/sensor/... endpoints defined in routes/v1/sensor.js
 router.use('/sensor', require('./v1/sensorRoutes'));
 
+// /api/v1/training/... endpoints defined in routes/v1/training.js
+router.use('/training', require('./v1/trainingRoutes'));
+
 module.exports = router;

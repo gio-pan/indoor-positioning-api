@@ -287,10 +287,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"employeeId\": \"123456788\"\n}"
+							"raw": "{\n\t\"employeeId\": \"123456789\"\n}"
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/equipment/pair/abcdefgh1",
+							"raw": "localhost:8080/api/v1/equipment/pair/abcdefghj",
 							"host": [
 								"localhost"
 							],
@@ -300,10 +300,37 @@
 								"v1",
 								"equipment",
 								"pair",
-								"abcdefgh1"
+								"abcdefghj"
 							]
 						},
 						"description": "Pair equipment by equipId"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/equipment/unpair/{equipId}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/equipment/unpair/abcdefghj",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"equipment",
+								"unpair",
+								"abcdefghj"
+							]
+						},
+						"description": "Unpair equipment by equipId"
 					},
 					"response": []
 				},
@@ -358,7 +385,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.2,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.4,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.3,\n\t\t\t\t\t\"y\": 0.3\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"danger\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 1\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 1,\n\t\t\t\t\t\"y\": 1\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 1,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"danger\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.3,\n\t\t\t\t\t\"y\": 0.3\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.6,\n\t\t\t\t\t\"y\": 0.5\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/geofence/add",
@@ -412,7 +439,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.2,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.4,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.9\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.9,\n\t\t\t\t\t\"y\": 0.9\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"warning\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"boundaries\": [\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.2,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0.4,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0.8\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"safe\"\n\t\t},\n\t\t{\n\t\t\t\"vertices\": [\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 1,\n\t\t\t\t\t\"y\": 0\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 1,\n\t\t\t\t\t\"y\": 1\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"x\": 0,\n\t\t\t\t\t\"y\": 1\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"safetyLevel\": \"warning\"\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/geofence/update",
@@ -481,7 +508,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"equipId\": \"abcdefghi\",\n\t\"mac\": \"12:34:56:AB:CD:EF\",\n\t\"timeRecorded\": \"2019-03-12T06:42:08.150Z\",\n\t\"wifiScan\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"rssi\": -40,\n\t\t\t\"channel\": 11\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"rssi\": -60,\n\t\t\t\"channel\": 6\n\t\t}\n\t],\n\t\"weightSensor\": 0.4\n}"
+							"raw": "{\n\t\"equipId\": \"abcdefghi\",\n\t\"mac\": \"12:34:56:AB:CD:ED\",\n\t\"timeRecorded\": \"2019-03-12T06:42:08.150Z\",\n\t\"wifiScan\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"rssi\": -40,\n\t\t\t\"channel\": 11\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"rssi\": -60,\n\t\t\t\"channel\": 6\n\t\t}\n\t],\n\t\"weightSensor\": 0.1,\n\t\"temperatureSensor\": 0.1\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/location/add",
@@ -715,6 +742,38 @@
 					"response": []
 				},
 				{
+					"name": "/api/v1/router/add/bulk",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"routers\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network1\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"x\": \"0\",\n\t\t\t\"y\": \"0\"\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"x\": \"0\",\n\t\t\t\"y\": \"1\"\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network3\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:58\",\n\t\t\t\"x\": \"1\",\n\t\t\t\"y\": \"1\"\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network4\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:59\",\n\t\t\t\"x\": \"1\",\n\t\t\t\"y\": \"0\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/add/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"add",
+								"bulk"
+							]
+						},
+						"description": "Create multiple routers"
+					},
+					"response": []
+				},
+				{
 					"name": "/api/v1/router/get/all",
 					"request": {
 						"method": "GET",
@@ -797,6 +856,76 @@
 					"response": []
 				},
 				{
+					"name": "/api/v1/router/delete/all",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/delete/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"delete",
+								"all"
+							]
+						},
+						"description": "Delete all routers"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/router/delete/bulk",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ids\": [\n\t\t\"5c87bb7dfd0ede004cc50f9e\",\n\t\t\"5c87bb7dfd0ede004cc50f93\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/router/delete/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"router",
+								"delete",
+								"bulk"
+							]
+						},
+						"description": "Delete multiple routers by id"
+					},
+					"response": []
+				},
+				{
 					"name": "/api/v1/router/delete/{id}",
 					"request": {
 						"method": "DELETE",
@@ -832,6 +961,260 @@
 			]
 		},
 		{
+			"name": "Training",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/v1/training/add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"wifiScan\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"rssi\": -40,\n\t\t\t\"channel\": 11\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"rssi\": -55,\n\t\t\t\"channel\": 6\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 3\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:51\",\n\t\t\t\"rssi\": -39,\n\t\t\t\"channel\": 6\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 4\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:53\",\n\t\t\t\"rssi\": -44,\n\t\t\t\"channel\": 6\n\t\t}\n\t],\n\t\"x\": \"0\",\n\t\"y\": \"0\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"add"
+							]
+						},
+						"description": "Create training data"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/add/bulk",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"trainings\": [\n\t\t{\n\t\t\t\"wifiScan\": [\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\t\t\"rssi\": -40,\n\t\t\t\t\t\"channel\": 11\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\t\t\"rssi\": -55,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 3\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:51\",\n\t\t\t\t\t\"rssi\": -39,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 4\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:53\",\n\t\t\t\t\t\"rssi\": -44,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"x\": \"0\",\n\t\t\t\"y\": \"0\"\n\t\t},\n\t\t{\n\t\t\t\"wifiScan\": [\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\t\t\"rssi\": -60,\n\t\t\t\t\t\"channel\": 11\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\t\t\"rssi\": -39,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 3\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:51\",\n\t\t\t\t\t\"rssi\": -44,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"ssid\": \"Test Network 4\",\n\t\t\t\t\t\"bssid\": \"BC:DE:FA:12:34:53\",\n\t\t\t\t\t\"rssi\": -55,\n\t\t\t\t\t\"channel\": 6\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"x\": \"1\",\n\t\t\t\"y\": \"1\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/add/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"add",
+								"bulk"
+							]
+						},
+						"description": "Create multiple training data"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/get/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/get/all/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"get",
+								"all",
+								""
+							]
+						},
+						"description": "Get all training data"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/get/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/get/5ca28f7e6c6cbc02dcb86b9e/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"get",
+								"5ca28f7e6c6cbc02dcb86b9e",
+								""
+							]
+						},
+						"description": "Get training data by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/trainng/update/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"wifiScan\": [\n\t\t{\n\t\t\t\"ssid\": \"Test Network\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:56\",\n\t\t\t\"rssi\": -40,\n\t\t\t\"channel\": 11\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 2\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:57\",\n\t\t\t\"rssi\": -55,\n\t\t\t\"channel\": 6\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 3\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:51\",\n\t\t\t\"rssi\": -39,\n\t\t\t\"channel\": 6\n\t\t},\n\t\t{\n\t\t\t\"ssid\": \"Test Network 4\",\n\t\t\t\"bssid\": \"BC:DE:FA:12:34:53\",\n\t\t\t\"rssi\": -44,\n\t\t\t\"channel\": 6\n\t\t}\n\t],\n\t\"x\": \"1\",\n\t\"y\": \"0\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/update/5ca28f7e6c6cbc02dcb86b9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"update",
+								"5ca28f7e6c6cbc02dcb86b9e"
+							]
+						},
+						"description": "Update training data by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/delete/all",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/delete/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"delete",
+								"all"
+							]
+						},
+						"description": "Delete all training data"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/delete/bulk",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ids\": [\n\t\t\"5ca28f7f6c6cbc02dcb86ba3\",\n\t\t\"5ca28f816c6cbc02dcb86ba8\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/delete/bulk",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"delete",
+								"bulk"
+							]
+						},
+						"description": "Delete multiple training data by id"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/training/delete/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/training/delete/5ca28f7e6c6cbc02dcb86b9e",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"training",
+								"delete",
+								"5ca28f7e6c6cbc02dcb86b9e"
+							]
+						},
+						"description": "Delete training data by id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Sensor",
 			"description": "",
 			"item": [
@@ -847,7 +1230,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"weightSensitivity\": 0.2\n}"
+							"raw": "{\n\t\"weightThreshold\": 0.2,\n\t\"temperatureThreshold\": 0.5\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/sensor/add",
@@ -901,7 +1284,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"weightSensitivity\": 0.2,\n\t\"temperatureSensitivity\": 30\n}"
+							"raw": "{\n\t\"weightSensitivity\": 0.2,\n\t\"weightThreshold\": 0.5,\n\t\"temperatureSensitivity\": 30,\n\t\"temperatureThreshold\": 0.5\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/api/v1/sensor/update",

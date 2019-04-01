@@ -41,7 +41,7 @@ app.use('/api/v1', require('./routes/v1'));
 
 // default response
 app.use((req, res) => {
-    res.status(404).json({ message: 'Not Found' });
+    res.status(404).json({ message: 'Route not found' });
 });
 
 // socket.io logging on connect and disconnect
