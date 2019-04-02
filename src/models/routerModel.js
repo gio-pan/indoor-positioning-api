@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 // define schema for a Router document
 const RouterSchema = new mongoose.Schema({
-    // name: { type: String, required: true, enum: ['Hard Hat', 'Left Boot', 'Right Boot'] },
     ssid: { type: String, required: true },
     bssid: {
         type: String,

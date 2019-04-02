@@ -33,7 +33,7 @@ const TrainingSchema = new mongoose.Schema({
             msg: 'wifiScan must be array of length 3 or more',
         }],
     },
-    x: { type: Number, requird: true },
+    x: { type: Number, required: true },
     y: { type: Number, required: true },
 });
 

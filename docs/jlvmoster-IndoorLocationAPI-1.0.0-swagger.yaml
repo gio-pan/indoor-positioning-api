@@ -23,6 +23,8 @@ tags:
     description: Operations about router configurations
   - name: sensor
     description: Operations about sensor configurations
+  - name: training
+    description: Operations about training data
 schemes:
 - http
 paths:
@@ -120,7 +122,7 @@ paths:
       tags:
         - employee
       summary: Delete an employee
-      description: Deletes a single employee from the system
+      description: Deletes a single employee from the system & unpair any paired equipments
       operationId: deleteEmployeeById
       parameters:
         - name: employeeId
@@ -259,6 +261,26 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
+  /equipment/unpair/{equipId}:
+    put:
+      tags:
+      - equipment
+      summary: Unpair equipment
+      description: Unpair existing equipment in the system from employee
+      operationId: unpairEquipmentById
+      parameters:
+      - name: equipId
+        in: path
+        description: Id of equipment to update
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
   /equipment/delete/{equipId}:
     delete:
       tags:
@@ -281,12 +303,170 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
+  /geofence/add:
+    post:
+      tags:
+        - geofence
+      summary: Add geofence (can have multiple boundaries)
+      description: Add a new geofence to the system, update all equipment statuses, and push changes to frontend
+      operationId: addGeofence
+      parameters:
+        - name: body
+          in: body
+          description: Geofence object that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Geofence'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/get:
+    get:
+      tags:
+        - geofence
+      summary: Retrieve geofence
+      description: Returns geofence from the system
+      operationId: getGeofence
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Geofence'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/update:
+    put:
+      tags:
+        - geofence
+      summary: Update geofence
+      description: Update geofence in the system, update all equipment statuses, and push changes to frontend
+      operationId: updateGeofence
+      parameters:
+        - name: body
+          in: body
+          description: Geofence object that updates the retrieved geofence
+          required: true
+          schema:
+            $ref: '#/definitions/Geofence'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /geofence/delete:
+    delete:
+      tags:
+        - geofence
+      summary: Delete geofence
+      description: Deletes geofence from the system, update all equipment statuses, and push changes to frontend
+      operationId: deleteGeofence
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/add:
+    post:
+      tags:
+        - floorplan
+      summary: Add a floorplan image (png or jpeg) under 5MB
+      description: Add a floorplan image to the system. Must be .png or .jpg/.jpeg and smaller than 5MB
+      operationId: addFloorplan
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: floorplan
+          type: file
+          description: The image to upload.
+          required: true
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        415:
+          $ref: '#/responses/UnsupportedMediaType'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/get:
+    get:
+      tags:
+        - floorplan
+      summary: Retrieve floorplan
+      description: Returns floorplan from the system
+      operationId: getFloorplan
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Floorplan'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/update:
+    put:
+      tags:
+        - floorplan
+      summary: Update floorplan image (png or jpeg) under 5MB
+      description: Update floorplan in the system. Must be .png or .jpg/.jpeg and smaller than 5MB. Then, delete geofence, update all equipment statuses, and push changes to frontend
+      operationId: updateFloorplan
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: floorplan
+          type: file
+          description: The image to upload.
+          required: true
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        415:
+          $ref: '#/responses/UnsupportedMediaType'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /floorplan/delete:
+    delete:
+      tags:
+        - floorplan
+      summary: Delete floorplan
+      description: Deletes floorplan from the system. Then, delete geofence, update all equipment statuses, and push changes to frontend
+      operationId: deleteFloorplan
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
   /location/add:
     post:
       tags:
       - location
       summary: Add location of equipment (update)
-      description: For tags to call to update their location
+      description: For tags to call to update their location. Position and safety is calculated on the server then pushed to frontend
       operationId: addLocation
       parameters:
       - name: body
@@ -356,20 +536,20 @@ paths:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
-  /geofence/add:
+  /router/add:
     post:
       tags:
-        - geofence
-      summary: Add geofence (can have multiple boundaries)
-      description: Add a new geofence to the system (TODO - and update equipment statuses)
-      operationId: addGeofence
+        - router
+      summary: Add an router
+      description: Add a new router to the system
+      operationId: addRouter
       parameters:
         - name: body
           in: body
-          description: Geofence object that will be added to the system
+          description: Router object that will be added to the system
           required: true
           schema:
-            $ref: '#/definitions/Geofence'
+            $ref: '#/definitions/Router'
       responses:
         201:
           $ref: '#/responses/Created'
@@ -379,74 +559,27 @@ paths:
           $ref: '#/responses/Conflict'
         500:
           $ref: '#/responses/InternalServerError'
-  /geofence/get:
-    get:
+  /router/add/bulk:
+    post:
       tags:
-        - geofence
-      summary: Retrieve geofence
-      description: Returns geofence from the system
-      operationId: getGeofence
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/Geofence'
-        404:
-          $ref: '#/responses/NotFound'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /geofence/update:
-    put:
-      tags:
-        - geofence
-      summary: Update geofence
-      description: Update geofence in the system (TODO - and update equipment statuses)
-      operationId: updateGeofence
+        - router
+      summary: Add multiple routers
+      description: Add multiple new routers to the system
+      operationId: addBulkRouters
       parameters:
         - name: body
           in: body
-          description: Geofence object that updates the retrieved geofence
+          description: Router objects that will be added to the system
           required: true
           schema:
-            $ref: '#/definitions/Geofence'
-      responses:
-        200:
-          description: OK
-        400:
-          $ref: '#/responses/BadRequest'
-        404:
-          $ref: '#/responses/NotFound'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /geofence/delete:
-    delete:
-      tags:
-        - geofence
-      summary: Delete geofence
-      description: Deletes geofence from the system (TODO - and update equipment statuses)
-      operationId: deleteGeofence
-      responses:
-        200:
-          description: OK
-        404:
-          $ref: '#/responses/NotFound'
-        500:
-          $ref: '#/responses/InternalServerError'
-  /floorplan/add:
-    post:
-      tags:
-        - floorplan
-      summary: Add a floorplan image (png or jpeg) under 5MB
-      description: Add a floorplan image to the system. Must be .png or .jpg/.jpeg and smaller than 5MB
-      operationId: addFloorplan
-      consumes:
-        - multipart/form-data
-      parameters:
-        - in: formData
-          name: floorplan
-          type: file
-          description: The image to upload.
-          required: true
+            type: object
+            required:
+              - routers
+            properties:
+              routers:
+                type: array
+                items:
+                  $ref: '#/definitions/Router'
       responses:
         201:
           $ref: '#/responses/Created'
@@ -454,41 +587,65 @@ paths:
           $ref: '#/responses/BadRequest'
         409:
           $ref: '#/responses/Conflict'
-        415:
-          $ref: '#/responses/UnsupportedMediaType'
         500:
           $ref: '#/responses/InternalServerError'
-  /floorplan/get:
+  /router/get/all:
     get:
       tags:
-        - floorplan
-      summary: Retrieve floorplan
-      description: Returns floorplan from the system
-      operationId: getFloorplan
+      - router
+      summary: Retrieve all routers
+      description: Returns all routers from the system
+      operationId: getAllRouters
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Floorplan'
+            type: array
+            items:
+              $ref: '#/definitions/Router'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /router/get/{id}:
+    get:
+      tags:
+        - router
+      summary: Retrieve an router
+      description: Returns a single router from the system
+      operationId: getRouterById
+      parameters:
+        - name: id
+          in: path
+          description: Id of router to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Router'
         404:
           $ref: '#/responses/NotFound'
         500:
           $ref: '#/responses/InternalServerError'
-  /floorplan/update:
+  /router/update/{id}:
     put:
       tags:
-        - floorplan
-      summary: Update floorplan image (png or jpeg) under 5MB
-      description: Update floorplan in the system. Must be .png or .jpg/.jpeg and smaller than 5MB
-      operationId: updateFloorplan
-      consumes:
-        - multipart/form-data
+        - router
+      summary: Update an router
+      description: Update an existing router in the system
+      operationId: updateRouterById
       parameters:
-        - in: formData
-          name: floorplan
-          type: file
-          description: The image to upload.
+        - name: id
+          in: path
+          description: Id of router to update
           required: true
+          type: string
+        - name: body
+          in: body
+          description: Router object that updates the retrieved router
+          required: true
+          schema:
+            $ref: '#/definitions/Router'
       responses:
         200:
           description: OK
@@ -496,17 +653,312 @@ paths:
           $ref: '#/responses/BadRequest'
         404:
           $ref: '#/responses/NotFound'
-        415:
-          $ref: '#/responses/UnsupportedMediaType'
         500:
           $ref: '#/responses/InternalServerError'
-  /floorplan/delete:
+  /router/delete/all:
     delete:
       tags:
-        - floorplan
-      summary: Delete floorplan
-      description: Deletes floorplan from the system
-      operationId: deleteFloorplan
+        - router
+      summary: Delete all routers
+      description: Deletes all routers from the system
+      operationId: deleteAllRouters
+      responses:
+        200:
+          description: OK
+        500:
+          $ref: '#/responses/InternalServerError'
+  /router/delete/bulk:
+    delete:
+      tags:
+        - router
+      summary: Delete multiple routers
+      description: Deletes multiple routers from the system
+      operationId: deleteBulkRouters
+      parameters:
+        - name: body
+          in: body
+          description: Ids of routers to be deleted
+          required: true
+          schema:
+            type: object
+            required:
+              - ids
+            properties:
+              ids:
+                type: array
+                items:
+                  type: string
+      responses:
+        200:
+          description: OK
+        500:
+          $ref: '#/responses/InternalServerError'
+  /router/delete/{id}:
+    delete:
+      tags:
+        - router
+      summary: Delete an router
+      description: Deletes a single router from the system
+      operationId: deleteRouterById
+      parameters:
+        - name: id
+          in: path
+          description: Id of router to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /sensor/add:
+    post:
+      tags:
+        - sensor
+      summary: Add sensor configuration
+      description: Add a new sensor config to the system
+      operationId: addSensor
+      parameters:
+        - name: body
+          in: body
+          description: Sensor config that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Sensor'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /sensor/get:
+    get:
+      tags:
+        - sensor
+      summary: Retrieve sensor config
+      description: Returns sensor from the system
+      operationId: getSensor
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Sensor'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /sensor/update:
+    put:
+      tags:
+        - sensor
+      summary: Update sensor
+      description: Update sensor config in the system
+      operationId: updateSensor
+      parameters:
+        - name: body
+          in: body
+          description: Sensor object that updates the retrieved sensor
+          required: true
+          schema:
+            $ref: '#/definitions/Sensor'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /sensor/delete:
+    delete:
+      tags:
+        - sensor
+      summary: Delete sensor config
+      description: Deletes sensor config from the system
+      operationId: deleteSensor
+      responses:
+        200:
+          description: OK
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/add:
+    post:
+      tags:
+        - training
+      summary: Add an training data point
+      description: Add a new training data point to the system
+      operationId: addTraining
+      parameters:
+        - name: body
+          in: body
+          description: Training object that will be added to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Training'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/add/bulk:
+    post:
+      tags:
+        - training
+      summary: Add multiple training data points
+      description: Add multiple new training data points to the system
+      operationId: addBulkTrainings
+      parameters:
+        - name: body
+          in: body
+          description: Training objects that will be added to the system
+          required: true
+          schema:
+            type: object
+            required:
+              - trainings
+            properties:
+              trainings:
+                type: array
+                items:
+                  $ref: '#/definitions/Training'
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        409:
+          $ref: '#/responses/Conflict'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/get/all:
+    get:
+      tags:
+      - training
+      summary: Retrieve all training data
+      description: Returns all training data from the system
+      operationId: getAllTrainings
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Training'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/get/{id}:
+    get:
+      tags:
+        - training
+      summary: Retrieve a training data point
+      description: Returns a single training data point from the system
+      operationId: getTrainingById
+      parameters:
+        - name: id
+          in: path
+          description: Id of training to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Training'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/update/{id}:
+    put:
+      tags:
+        - training
+      summary: Update a training data point
+      description: Update an existing training data point in the system
+      operationId: updateTrainingById
+      parameters:
+        - name: id
+          in: path
+          description: Id of training to update
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Training object that updates the retrieved training
+          required: true
+          schema:
+            $ref: '#/definitions/Training'
+      responses:
+        200:
+          description: OK
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/delete/all:
+    delete:
+      tags:
+        - training
+      summary: Delete all training data
+      description: Deletes all training data from the system
+      operationId: deleteAllTrainings
+      responses:
+        200:
+          description: OK
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/delete/bulk:
+    delete:
+      tags:
+        - training
+      summary: Delete multiple training data points
+      description: Deletes multiple training data points from the system
+      operationId: deleteBulkTrainings
+      parameters:
+        - name: body
+          in: body
+          description: Ids of trainings to be deleted
+          required: true
+          schema:
+            type: object
+            required:
+              - ids
+            properties:
+              ids:
+                type: array
+                items:
+                  type: string
+      responses:
+        200:
+          description: OK
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/delete/{id}:
+    delete:
+      tags:
+        - training
+      summary: Delete a training data point
+      description: Deletes a single training data point from the system
+      operationId: deleteTrainingById
+      parameters:
+        - name: id
+          in: path
+          description: Id of training to delete
+          required: true
+          type: string
       responses:
         200:
           description: OK
@@ -585,7 +1037,7 @@ definitions:
         type: boolean
         description: Latest update whether the equipment is being worn according to sensors (updated by server from added location)
         example: true
-      inSafeArea:
+      safetyStatus:
         type: boolean
         description: Latest update whether the equipment is in a safe area (calculated by server)
         example: true
@@ -593,82 +1045,12 @@ definitions:
         type: number
         format: float
         description: Latest x coordinates (updated by server from added location)
-        example: -0.5555556
+        example: 0.5
       latestY:
         type: number
         format: float
         description: Latest y coordinates (updated by server from added location)
-        example: -9
-  Location:
-    type: object
-    required:
-      - equipId
-      # - name
-      - mac
-      - timeRecorded
-      - wifiScan
-      - weightSensor
-    properties:
-      equipId:
-        type: string
-        description: Equipment reference id
-        example: 123abc789
-      # name:
-      #   type: string
-      #   description: Name of equipment
-      #   enum:
-      #   - Hard Hat
-      #   - Left Boot
-      #   - Right Boot
-      mac:
-        type: string
-        pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
-        description: Equipment MAC address
-        example: 'E6:4F:09:AA:D1:0B'
-      timeRecorded:
-        type: string
-        format: date-time
-        description: Time that the wifiScan was recorded
-      wifiScan:
-        type: array
-        items:
-          type: object
-          properties:
-            ssid:
-              type: string
-            bssid:
-              type: string
-            rssi:
-              type: integer
-              format: int64
-            channel:
-              type: integer
-              format: int64
-      weightSensor:
-        type: number
-        format: float
-      assignedEmployeeId:
-        type: string
-        description: Id of employee equipment is assigned to (can be retrieved by server)
-        example: 123456789
-      isWorn:
-        type: boolean
-        description: Whether the equipment is being worn according to sensors
-        example: true
-      inSafeArea:
-        type: boolean
-        description: Whether the equipment is in a safe area (calculated by server from coordinates)
-        example: true
-      x:
-        type: number
-        format: float
-        description: X coordinate (calculated by server from wifiScan)
-        example: 0.5555556
-      y:
-        type: number
-        format: float
-        description: Y coordinate (calculated by server from wifiScan)
-        example: 0.6
+        example: 0.1
   Geofence:
     type: object
     required:
@@ -692,9 +1074,13 @@ definitions:
                   x:
                     type: number
                     format: float
+                    description: x coordinate (from 0 to 1)
+                    example: 0.12
                   y:
                     type: number
                     format: float
+                    description: y coordinate (from 0 to 1)
+                    example: 0.4
               description: A list of x and y coordinates that make up a polyline (at least 3)
               example:
                 - x: 0.2
@@ -808,6 +1194,186 @@ definitions:
     #             format: int64
     #             example: 1296
     #     description: Object containing x, y coordinates of the four corners of the floor image
+  Location:
+    type: object
+    required:
+      # - equipId
+      # - name
+      - mac
+      - timeRecorded
+      - wifiScan
+      - weightSensor
+      - temperatureSensor
+    properties:
+      # equipId:
+      #   type: string
+      #   description: Equipment reference id
+      #   example: 123abc789
+      # name:
+      #   type: string
+      #   description: Name of equipment
+      #   enum:
+      #   - Hard Hat
+      #   - Left Boot
+      #   - Right Boot
+      mac:
+        type: string
+        pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        description: Equipment MAC address
+        example: 'E6:4F:09:AA:D1:0B'
+      timeRecorded:
+        type: string
+        format: date-time
+        description: Time that the wifiScan was recorded
+      wifiScan:
+        type: array
+        items:
+          type: object
+          properties:
+            ssid:
+              type: string
+              description: Network name
+              example: eduroam
+            bssid:
+              type: string
+              pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+              description: Access point MAC address
+              example: 'E6:4F:09:AA:D1:0B'
+            rssi:
+              type: integer
+              format: int64
+              description: Received Signal Strength in dBm
+              example: -44
+            channel:
+              type: integer
+              format: int64
+              description: Channel used
+              example: 6
+        description: Array of wifi scan results
+      weightSensor:
+        type: number
+        format: float
+        description: Reading from weight sensor
+        example: 1230
+      temperatureSensor:
+        type: number
+        format: float
+        description: Reading from temperature sensor
+        example: 123
+      # assignedEmployeeId:
+      #   type: string
+      #   description: Id of employee equipment is assigned to (can be retrieved by server)
+      #   example: 123456789
+      # isWorn:
+      #   type: boolean
+      #   description: Whether the equipment is being worn according to sensors
+      #   example: true
+      # safetyStatus:
+      #   type: boolean
+      #   description: Whether the equipment is in a safe area (calculated by server from coordinates)
+      #   example: true
+      # x:
+      #   type: number
+      #   format: float
+      #   description: X coordinate (calculated by server from wifiScan)
+      #   example: 0.5555556
+      # y:
+      #   type: number
+      #   format: float
+      #   description: Y coordinate (calculated by server from wifiScan)
+      #   example: 0.6
+  Router:
+    type: object
+    required:
+      - ssid
+      - bssid
+      - x
+      - y
+    properties:
+      ssid:
+        type: string
+        description: Network name
+        example: eduroam
+      bssid:
+        type: string
+        pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        description: Equipment MAC address
+        example: 'E6:4F:09:AA:D1:0B'
+      x:
+        type: number
+        format: float
+        description: x coordinate (from 0 to 1)
+        example: 0.12
+      y:
+        type: number
+        format: float
+        description: y coordinate (from 0 to 1)
+        example: 0.4
+  Sensor:
+    type: object
+    properties:
+      weightSensitivity:
+        type: number
+        format: float
+        description: Sensitivity of weight sensor
+        example: 0.12
+      weightThreshold:
+        type: number
+        format: float
+        description: Threshold of weight sensor
+        example: 0.12
+      temperatureSensitivity:
+        type: number
+        format: float
+        description: Sensitivity of temperature sensor
+        example: 0.12
+      temperatureThreshold:
+        type: number
+        format: float
+        description: Threshold of temperature sensor
+        example: 0.4
+  Training:
+    type: object
+    required:
+      - wifiScan
+      - x
+      - y
+    properties:
+      wifiScan:
+        type: array
+        items:
+          type: object
+          properties:
+            ssid:
+              type: string
+              description: Network name
+              example: eduroam
+            bssid:
+              type: string
+              pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+              description: Access point MAC address
+              example: 'E6:4F:09:AA:D1:0B'
+            rssi:
+              type: integer
+              format: int64
+              description: Received Signal Strength in dBm
+              example: -44
+            channel:
+              type: integer
+              format: int64
+              description: Channel used
+              example: 6
+        description: Array of wifi scan results (at least 3)
+      x:
+        type: number
+        format: float
+        description: labeled x coordinate (from 0 to 1) input by user
+        example: 0.12
+      y:
+        type: number
+        format: float
+        description: labeled y coordinate (from 0 to 1) input by user
+        example: 0.12
 responses:
   Created:
     description: Created
