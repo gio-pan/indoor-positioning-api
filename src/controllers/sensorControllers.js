@@ -7,10 +7,8 @@ const sensorAdd = async (req, res) => {
     // using mongoose
     try {
         const sensor = new Sensor({
-            weightSensitivity: req.body.weightSensitivity,
+            // weightSensitivity: req.body.weightSensitivity,
             weightThreshold: req.body.weightThreshold,
-            temperatureSensitivity: req.body.temperatureSensitivity,
-            temperatureThreshold: req.body.temperatureThreshold,
         });
         const oldSensor = await Sensor.findOne({});
         if (oldSensor !== null) {

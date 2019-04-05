@@ -2,18 +2,16 @@ const Sensor = require('../models/sensorModel');
 const isInsidePolygon = require('../libs/isInsidePolygon');
 
 // TODO:
-const isWorn = async (weightSensor, temperatureSensor) => {
+const isWorn = async (weightSensor) => {
     try {
         const sensorConfig = await Sensor.findOne({});
         if (sensorConfig === null) {
             console.log('NO SENSOR CONFIGURATION: isWorn WILL ALWAYS BE FALSE');
             return false;
         }
-        const { weightThreshold, temperatureThreshold } = sensorConfig;
-        if (typeof weightThreshold !== 'undefined' && typeof temperatureThreshold !== 'undefined') {
-            if (weightSensor > weightThreshold && temperatureSensor > temperatureThreshold) {
-                return true;
-            }
+        const { weightThreshold } = sensorConfig;
+        if (typeof weightThreshold !== 'undefined' && weightSensor > weightThreshold) {
+            return true;
         }
         return false;
     } catch (e) {

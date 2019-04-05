@@ -842,6 +842,67 @@ paths:
           $ref: '#/responses/Conflict'
         500:
           $ref: '#/responses/InternalServerError'
+  /training/add/wifiScan:
+    post:
+      tags:
+        - training
+      summary: Add an unlabeled wifiScan to be labeled by the frontend
+      description: Add an unlabeled wifiScan to the system and wait for frontend to label it (length > 2)
+      operationId: addTrainingWifiScan
+      parameters:
+        - name: body
+          in: body
+          description: Training object that will be added to the system
+          required: true
+          schema:
+            type: object
+            required:
+              - wifiScan
+            properties:
+              wifiScan:
+                $ref: '#/definitions/WifiScan'
+      responses:
+        200:
+          description: OK
+        500:
+          $ref: '#/responses/InternalServerError'
+  /training/add/label:
+    post:
+      tags:
+        - training
+      summary: Add a label to the latest wifiScan
+      description: Add a label to the latest wifiScan from the tag to create training data point
+      operationId: addTrainingLabel
+      parameters:
+        - name: body
+          in: body
+          description: Training object that will be added to the system
+          required: true
+          schema:
+            type: object
+            required:
+              - x
+              - y
+            properties:
+              x:
+                type: number
+                format: float
+                description: x coordinate to label wifiScan with
+                example: 0.5
+              y:
+                type: number
+                format: float
+                description: y coordinate to label wifiScan with
+                example: 0.5
+      responses:
+        201:
+          $ref: '#/responses/Created'
+        400:
+          $ref: '#/responses/BadRequest'
+        404:
+          $ref: '#/responses/NotFound'
+        500:
+          $ref: '#/responses/InternalServerError'
   /training/get/all:
     get:
       tags:
@@ -994,18 +1055,6 @@ definitions:
           - manager
           - worker
         description: Employee role (affects security privileges)
-      # status:
-      #   type: string
-      #   enum:
-      #     - safe
-      #     - warning
-      #     - danger
-      #   description: Current safety condition
-      # equipIds:
-      #   type: array
-      #   items:
-      #     $ref: '#/definitions/Equipment'
-      #   description: Array of equipment belonging to an employee
   Equipment:
     type: object
     required:
@@ -1044,12 +1093,12 @@ definitions:
       latestX:
         type: number
         format: float
-        description: Latest x coordinates (updated by server from added location)
+        description: Latest x coordinate (updated by server from added location)
         example: 0.5
       latestY:
         type: number
         format: float
-        description: Latest y coordinates (updated by server from added location)
+        description: Latest y coordinate (updated by server from added location)
         example: 0.1
   Geofence:
     type: object
@@ -1200,10 +1249,8 @@ definitions:
       # - equipId
       # - name
       - mac
-      - timeRecorded
       - wifiScan
       - weightSensor
-      - temperatureSensor
     properties:
       # equipId:
       #   type: string
@@ -1221,45 +1268,15 @@ definitions:
         pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
         description: Equipment MAC address
         example: 'E6:4F:09:AA:D1:0B'
-      timeRecorded:
-        type: string
-        format: date-time
-        description: Time that the wifiScan was recorded
       wifiScan:
         type: array
         items:
-          type: object
-          properties:
-            ssid:
-              type: string
-              description: Network name
-              example: eduroam
-            bssid:
-              type: string
-              pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
-              description: Access point MAC address
-              example: 'E6:4F:09:AA:D1:0B'
-            rssi:
-              type: integer
-              format: int64
-              description: Received Signal Strength in dBm
-              example: -44
-            channel:
-              type: integer
-              format: int64
-              description: Channel used
-              example: 6
-        description: Array of wifi scan results
+          $ref: '#/definitions/WifiScan'
       weightSensor:
         type: number
         format: float
         description: Reading from weight sensor
         example: 1230
-      temperatureSensor:
-        type: number
-        format: float
-        description: Reading from temperature sensor
-        example: 123
       # assignedEmployeeId:
       #   type: string
       #   description: Id of employee equipment is assigned to (can be retrieved by server)
@@ -1312,26 +1329,16 @@ definitions:
   Sensor:
     type: object
     properties:
-      weightSensitivity:
-        type: number
-        format: float
-        description: Sensitivity of weight sensor
-        example: 0.12
+      # weightSensitivity:
+      #   type: number
+      #   format: float
+      #   description: Sensitivity of weight sensor
+      #   example: 0.12
       weightThreshold:
         type: number
         format: float
         description: Threshold of weight sensor
         example: 0.12
-      temperatureSensitivity:
-        type: number
-        format: float
-        description: Sensitivity of temperature sensor
-        example: 0.12
-      temperatureThreshold:
-        type: number
-        format: float
-        description: Threshold of temperature sensor
-        example: 0.4
   Training:
     type: object
     required:
@@ -1340,30 +1347,7 @@ definitions:
       - y
     properties:
       wifiScan:
-        type: array
-        items:
-          type: object
-          properties:
-            ssid:
-              type: string
-              description: Network name
-              example: eduroam
-            bssid:
-              type: string
-              pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
-              description: Access point MAC address
-              example: 'E6:4F:09:AA:D1:0B'
-            rssi:
-              type: integer
-              format: int64
-              description: Received Signal Strength in dBm
-              example: -44
-            channel:
-              type: integer
-              format: int64
-              description: Channel used
-              example: 6
-        description: Array of wifi scan results (at least 3)
+        $ref: '#/definitions/WifiScan'
       x:
         type: number
         format: float
@@ -1374,6 +1358,26 @@ definitions:
         format: float
         description: labeled y coordinate (from 0 to 1) input by user
         example: 0.12
+  WifiScan:
+    type: array
+    items:
+      type: object
+      properties:
+        ssid:
+          type: string
+          description: Network name
+          example: eduroam
+        bssid:
+          type: string
+          pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+          description: Access point MAC address
+          example: 'E6:4F:09:AA:D1:0B'
+        rssi:
+          type: integer
+          format: int64
+          description: Received Signal Strength in dBm
+          example: -44
+    description: Array of wifi scan results
 responses:
   Created:
     description: Created

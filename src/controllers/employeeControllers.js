@@ -12,8 +12,6 @@ const employeeAdd = async (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             role: req.body.role,
-            // status: req.body.status,
-            // equipIds: req.body.equipIds,
         });
         await employee.save();
         res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${employee.employeeId}`);

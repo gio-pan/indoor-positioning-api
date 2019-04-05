@@ -35,6 +35,49 @@ const trainingAddBulk = async (req, res) => {
     }
 };
 
+// store latest wifiScan and wait to be labeled by frontend
+const trainingAddWifiScan = async (req, res) => {
+    try {
+        req.app.locals.lastWifiScan = req.body.wifiScan;
+        res.status(200).json({
+            message: 'Wifi scan is waiting to be labeled', // swagger
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
+// apply (x,y) label to latest wifiScan and store in database
+const trainingAddLabel = async (req, res) => {
+    // using mongoose
+    try {
+        const wifiScan = req.app.locals.lastWifiScan;
+        if (typeof wifiScan === 'undefined' || wifiScan === null) {
+            res.status(404).json({
+                message: 'No wifiScan to label. Wait for a wifiScan from the tag to be sent', // swagger
+            });
+            return;
+        }
+
+        const training = new Training({
+            wifiScan: wifiScan,
+            x: req.body.x,
+            y: req.body.y,
+        });
+        const newTraining = await training.save();
+
+        // prevent double labeling the same wifiScan
+        req.app.locals.lastWifiScan = null;
+
+        res.set('Location', `${req.protocol}://${req.hostname}${req.baseUrl}/get/${newTraining.id}`);
+        res.status(201).json({
+            message: `Added training data with id = ${newTraining.id}`,
+        });
+    } catch (err) {
+        errorResponse(err, res);
+    }
+};
+
 // get all training documents
 const trainingGetAll = async (req, res) => {
     try {
@@ -130,6 +173,8 @@ const trainingDeleteById = async (req, res) => {
 module.exports = {
     trainingAdd,
     trainingAddBulk,
+    trainingAddWifiScan,
+    trainingAddLabel,
     trainingGetAll,
     trainingGetById,
     trainingUpdateById,

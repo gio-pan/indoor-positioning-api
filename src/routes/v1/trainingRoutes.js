@@ -12,25 +12,31 @@ router.all('/', (req, res) => {
 // use handler defined in controllers/trainingControllers.js
 router.post('/add', trainingControllers.trainingAdd);
 
-// POST /api/v1/trainingadd/bulk endpoint
+// POST /api/v1/training/add/bulk endpoint
 router.post('/add/bulk', trainingControllers.trainingAddBulk);
 
-// GET /api/v1/trainingget/all
+// POST /api/v1/training/add/wifiScan endpoint
+router.post('/add/wifiScan', trainingControllers.trainingAddWifiScan);
+
+// POST /api/v1/training/add/label endpoint
+router.post('/add/label', trainingControllers.trainingAddLabel);
+
+// GET /api/v1/training/get/all
 router.get('/get/all', trainingControllers.trainingGetAll);
 
-// GET /api/v1/trainingget/:id endpoint
+// GET /api/v1/training/get/:id endpoint
 router.get('/get/:id', trainingControllers.trainingGetById);
 
-// PUT /api/v1/trainingupdate/:id endpoint
+// PUT /api/v1/training/update/:id endpoint
 router.put('/update/:id', trainingControllers.trainingUpdateById);
 
-// DELETE /api/v1/trainingdelete/all endpoint
+// DELETE /api/v1/training/delete/all endpoint
 router.delete('/delete/all', trainingControllers.trainingDeleteAll);
 
-// DELETE /api/v1/trainingdelete/bulk endpoint
+// DELETE /api/v1/training/delete/bulk endpoint
 router.delete('/delete/bulk', trainingControllers.trainingDeleteBulk);
 
-// DELETE /api/v1/trainingdelete/:id endpoint
+// DELETE /api/v1/training/delete/:id endpoint
 router.delete('/delete/:id', trainingControllers.trainingDeleteById);
 
 // byMacAddress??

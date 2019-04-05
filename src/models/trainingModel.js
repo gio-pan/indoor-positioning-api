@@ -16,7 +16,6 @@ const WifiScanSchema = new mongoose.Schema({
         }],
     },
     rssi: { type: Number, required: true },
-    channel: { type: Number, required: true },
 });
 
 // define schema for a Training document

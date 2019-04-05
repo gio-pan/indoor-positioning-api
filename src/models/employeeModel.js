@@ -8,8 +8,6 @@ const EmployeeSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     role: { type: String, required: true, enum: ['admin', 'manager', 'worker'] },
     // company, unit, etc?
-    // status: { type: String, enum: ['safe', 'warning', 'danger'], default: 'safe' },
-    // equipIds: [EquipmentSchema],
 });
 
 // both of the following work to specify error messages for required fields

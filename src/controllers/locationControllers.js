@@ -51,13 +51,11 @@ const locationAdd = async (req, res) => {
         }
 
         const location = new Location({
-            equipId: updatedEquipment.equipId, // swagger
-            name: updatedEquipment.name, // swagger
             mac: req.body.mac,
-            timeRecorded: req.body.timeRecorded,
             wifiScan: req.body.wifiScan,
             weightSensor: req.body.weightSensor,
-            temperatureSensor: req.body.temperatureSensor,
+            equipId: updatedEquipment.equipId, // swagger
+            name: updatedEquipment.name, // swagger
             assignedEmployeeId: updatedEquipment.assignedEmployeeId,
             isWorn: isWorn,
             safetyStatus: safetyStatus,
