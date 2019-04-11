@@ -394,6 +394,18 @@ paths:
           type: file
           description: The image to upload.
           required: true
+        - in: formData
+          name: xScale
+          type: number
+          format: float
+          description: scale to convert from image proportion to meters on x axis
+          required: true
+        - in: formData
+          name: yScale
+          type: number
+          format: float
+          description: scale to convert from image proportion to meters on y axis
+          required: true
       responses:
         201:
           $ref: '#/responses/Created'
@@ -435,6 +447,18 @@ paths:
           name: floorplan
           type: file
           description: The image to upload.
+          required: true
+        - in: formData
+          name: xScale
+          type: number
+          format: float
+          description: scale to convert from image proportion to meters on x axis
+          required: true
+        - in: formData
+          name: yScale
+          type: number
+          format: float
+          description: scale to convert from image proportion to meters on y axis
           required: true
       responses:
         200:
@@ -1153,9 +1177,20 @@ definitions:
         description: mimetype of file
         example: image/png
       size:
-        type: number
+        type: integer
+        format: int64
         description: size of the file in bytes
         example: 90132
+      xScale:
+        type: number
+        format: float
+        description: scale to convert from image proportion to meters on x axis
+        example: 19.291
+      yScale:
+        type: number
+        format: float
+        description: scale to convert from image proportion to meters on y axis
+        example: 24.131
       imgData:
         type: string
         description: data of the image file to be placed in <img src={*here*}/>

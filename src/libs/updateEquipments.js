@@ -8,7 +8,7 @@ const updateAllStatus = async (boundaries, io) => {
             latestX: { $exists: true },
             latestY: { $exists: true },
         });
-        console.log(equipments);
+        // console.log(equipments);
         const updatedEquipments = [];
         await Promise.all(equipments.map(async (equipment) => {
             const x = equipment.latestX;

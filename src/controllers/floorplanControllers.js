@@ -36,6 +36,8 @@ const floorplanAdd = async (req, res) => {
             data: req.file.buffer,
             contentType: req.file.mimetype,
             size: req.file.size,
+            xScale: req.body.xScale,
+            yScale: req.body.yScale,
         });
 
         const oldFloorplan = await Floorplan.findOne({});
@@ -76,6 +78,8 @@ const floorplanGet = async (req, res) => {
             createdAt: floorplan.createdAt,
             updatedAt: floorplan.updatedAt,
             imgData: base64Flag + base64Image,
+            xScale: floorplan.xScale,
+            yScale: floorplan.yScale,
         };
 
         res.status(200).json(convertedResponse);
@@ -94,6 +98,8 @@ const floorplanUpdate = async (req, res) => {
             data: req.file.buffer,
             contentType: req.file.mimetype,
             size: req.file.size,
+            xScale: req.body.xScale,
+            yScale: req.body.yScale,
         };
 
         const floorplan = await Floorplan.findOneAndUpdate(
