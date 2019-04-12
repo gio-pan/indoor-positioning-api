@@ -17,18 +17,16 @@ const locationAdd = async (req, res) => {
         const routers = await Router.find({ bssid: { $in: macsInReq } });
         const routerBssids = routers.map(router => router.bssid);
         const wifiScanWithKnownRouters = wifiScan.filter(scan => routerBssids.includes(scan.bssid));
-        const threeStrongestScans = wifiScanWithKnownRouters.sort((a, b) => {
-            return (-a.rssi) + b.rssi;
-        }).slice(0, 3);
+        const threeStrongestScans = wifiScanWithKnownRouters.sort((a, b) => (-a.rssi) + b.rssi)
+            .slice(0, 3);
         if (threeStrongestScans.length < 3) {
             res.status(400).json({
                 message: 'Wifiscan did not contain at least 3 routers that are in the system',
             });
             return;
         }
-        const threeRouters = threeStrongestScans.map((scan) => {
-            return routers.find(router => router.bssid === scan.bssid);
-        });
+        const threeRouters = threeStrongestScans
+            .map(scan => routers.find(router => router.bssid === scan.bssid));
 
         const { xScale, yScale } = await Floorplan.findOne({}).select({ xScale: 1, yScale: 1 });
 
