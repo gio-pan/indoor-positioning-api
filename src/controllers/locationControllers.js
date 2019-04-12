@@ -1,18 +1,41 @@
 const Location = require('../models/locationModel');
 const Geofence = require('../models/geofenceModel');
+const Floorplan = require('../models/floorplanModel');
+const Router = require('../models/routerModel');
 const errorResponse = require('../libs/errorHandler');
 const updateEquipments = require('../libs/updateEquipments');
 const calculateSafety = require('../libs/calculateSafety');
+const triangulation = require('../libs/triangulation');
 
 // create document for a location in db
 // use schema defined in models/locationModel.js
 const locationAdd = async (req, res) => {
     // using mongoose
     try {
+        const { wifiScan } = req.body;
+        const macsInReq = wifiScan.map(scan => scan.bssid);
+        const routers = await Router.find({ bssid: { $in: macsInReq } });
+        const routerBssids = routers.map(router => router.bssid);
+        const wifiScanWithKnownRouters = wifiScan.filter(scan => routerBssids.includes(scan.bssid));
+        const threeStrongestScans = wifiScanWithKnownRouters.sort((a, b) => {
+            return (-a.rssi) + b.rssi;
+        }).slice(0, 3);
+        if (threeStrongestScans.length < 3) {
+            res.status(400).json({
+                message: 'Wifiscan did not contain at least 3 routers that are in the system',
+            });
+            return;
+        }
+        const threeRouters = threeStrongestScans.map((scan) => {
+            return routers.find(router => router.bssid === scan.bssid);
+        });
+
+        const { xScale, yScale } = await Floorplan.findOne({}).select({ xScale: 1, yScale: 1 });
+
         // TODO: calculate position: x, y
-        // let { x, y } = calculatePosition(locationObj.wifiScan)
-        const x = Math.random();
-        const y = Math.random();
+        const [x, y] = triangulation.triangulate(threeStrongestScans, threeRouters, xScale, yScale);
+        // const x = Math.random();
+        // const y = Math.random();
 
         // TODO: calculate if worn
         const isWorn = await calculateSafety.isWorn(req.body.weightSensor,
