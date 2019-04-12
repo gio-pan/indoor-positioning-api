@@ -1,15 +1,18 @@
 const Floorplan = require('../models/floorplanModel');
 const Geofence = require('../models/geofenceModel');
+const Router = require('../models/routerModel');
 const errorResponse = require('../libs/errorHandler');
 const updateEquipments = require('../libs/updateEquipments');
 
-const multerError = (req, res) => {
+// create document for a floorplan in db
+// use schema defined in models/floorplanModel.js
+const floorplanAdd = async (req, res) => {
     if (req.fileTypeError) {
         res.status(415).json({
             message: 'Unsupported Media Type',
             error: 'floorplan must be a png or jpeg file',
         });
-        return true;
+        return;
     }
 
     if (typeof req.file === 'undefined') {
@@ -17,16 +20,6 @@ const multerError = (req, res) => {
             message: 'Bad Request',
             error: 'floorplan is a required field in the form-data',
         });
-        return true;
-    }
-
-    return false;
-};
-
-// create document for a floorplan in db
-// use schema defined in models/floorplanModel.js
-const floorplanAdd = async (req, res) => {
-    if (multerError(req, res)) {
         return;
     }
 
@@ -90,17 +83,27 @@ const floorplanGet = async (req, res) => {
 
 // update floorplan document
 const floorplanUpdate = async (req, res) => {
-    if (multerError(req, res)) {
+    if (req.fileTypeError) {
+        res.status(415).json({
+            message: 'Unsupported Media Type',
+            error: 'floorplan must be a png or jpeg file',
+        });
         return;
     }
+
     try {
-        const newFloorplan = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-            size: req.file.size,
-            xScale: req.body.xScale,
-            yScale: req.body.yScale,
-        };
+        const newFloorplan = {};
+        if (typeof req.file !== 'undefined') {
+            newFloorplan.data = req.file.buffer;
+            newFloorplan.contentType = req.file.mimetype;
+            newFloorplan.size = req.file.size;
+        }
+        if (typeof req.body.xScale !== 'undefined' && req.body.xScale !== null) {
+            newFloorplan.xScale = req.body.xScale;
+        }
+        if (typeof req.body.yScale !== 'undefined' && req.body.yScale !== null) {
+            newFloorplan.yScale = req.body.yScale;
+        }
 
         const floorplan = await Floorplan.findOneAndUpdate(
             {},
@@ -116,6 +119,8 @@ const floorplanUpdate = async (req, res) => {
 
         // delete geofence
         await Geofence.findOneAndDelete({});
+        // delete routers
+        await Router.deleteMany({});
         // get io object that was attached to app in index.js, app is attached to req
         const io = req.app.get('io');
         // update each equipmentModel
@@ -144,6 +149,8 @@ const floorplanDelete = async (req, res) => {
 
         // delete geofence
         await Geofence.findOneAndDelete({});
+        // delete routers
+        await Router.deleteMany({});
         // get io object that was attached to app in index.js, app is attached to req
         const io = req.app.get('io');
         // update each equipmentModel
