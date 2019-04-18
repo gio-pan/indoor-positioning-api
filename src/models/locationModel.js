@@ -5,6 +5,7 @@ const WifiScanSchema = new mongoose.Schema({
     bssid: {
         type: String,
         required: true,
+        uppercase: true,
         validate: [{
             validator: v => new Promise((resolve) => {
                 setTimeout(() => {
@@ -23,6 +24,7 @@ const LocationSchema = new mongoose.Schema({
     mac: {
         type: String,
         required: true,
+        uppercase: true,
         validate: [{
             validator: v => new Promise((resolve) => {
                 setTimeout(() => {

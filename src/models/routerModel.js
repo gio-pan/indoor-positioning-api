@@ -7,6 +7,7 @@ const RouterSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        uppercase: true,
         validate: [{
             validator: v => new Promise((resolve) => {
                 setTimeout(() => {
