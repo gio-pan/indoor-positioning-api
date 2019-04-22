@@ -1,3 +1,5 @@
+const Trilateration = require('./trilateration');
+
 function rssi_to_distance(rssi) {
     const distances = [0, 0, 0];
     for (let i = 0; i < rssi.length; i++) {
@@ -215,9 +217,20 @@ function triangulate(wifiScans, routers, xScale, yScale) {
     console.log(centers);
     const distances = rssi_to_distance(rssis);
     console.log('distances: ', distances);
-    const intersectInMeters = intersect3(distances, centers);
-    console.log([intersectInMeters[0] / xScale, intersectInMeters[1] / yScale]);
-    return [intersectInMeters[0] / xScale, intersectInMeters[1] / yScale];
+    const input = [
+        [centers[0][0], centers[0][1], distances[0]],
+        [centers[1][0], centers[1][1], distances[1]],
+        [centers[2][0], centers[2][1], distances[2]],
+    ];
+    const location = Trilateration.trilat(input);
+    console.log(location);
+    if (location !== null) {
+        return [location[0] / xScale, location[1] / yScale]
+    }
+    return [0, 0];
+    // const intersectInMeters = intersect3(distances, centers);
+    // console.log([intersectInMeters[0] / xScale, intersectInMeters[1] / yScale]);
+    // return [intersectInMeters[0] / xScale, intersectInMeters[1] / yScale];
 }
 
 // console.log("location: ", triangulate(-56.4, -35.4, -51));

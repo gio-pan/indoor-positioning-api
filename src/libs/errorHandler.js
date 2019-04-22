@@ -16,7 +16,7 @@ const errorResponse = (err, res) => {
         });
         return;
     }
-
+    console.log(err);
     res.status(500).json({
         message: 'Could not perform operation due to an internal server error',
         error: {
